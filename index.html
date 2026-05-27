@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
         (function(m,e,t,r,i,k,a){
             m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -13,8 +12,6 @@
         ym(109454353, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/109454353" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FINDIdea</title>
@@ -37,7 +34,6 @@
             --slider-knob: #ffffff;
             --toast-bg: #000000;
             --toast-text: #ffffff;
-            --heart-filter: drop-shadow(0px 0px 1px #000);
         }
 
         [data-theme="dark"] {
@@ -55,7 +51,6 @@
             --slider-knob: #ffffff;
             --toast-bg: #ffffff;
             --toast-text: #000000;
-            --heart-filter: drop-shadow(0px 0px 1px #fff);
         }
 
         body { 
@@ -65,9 +60,7 @@
             font-weight: 700;
             background-color: var(--bg-color);
             color: var(--text-color);
-            background-size: 100% 200%;
-            background-position: top center;
-            transition: background-position 0.8s ease, background-color 0.8s ease, color 0.5s ease;
+            transition: background-color 0.8s ease, color 0.5s ease;
         }
 
         body.theme-changing {
@@ -131,23 +124,21 @@
             gap: 10px;
         }
 
-        .heart-btn {
+        /* SVG-сердечки для поддержки iOS */
+        .heart-svg {
+            width: 26px;
+            height: 26px;
             cursor: pointer;
-            font-size: 1.2rem;
-            user-select: none;
             transition: transform 0.2s ease;
-            display: inline-block;
+            stroke: var(--text-color);
+            fill: none;
+            stroke-width: 2px;
+            flex-shrink: 0;
         }
-        .heart-btn:hover { transform: scale(1.2); }
-        .heart-btn.unliked {
-            color: transparent;
-            -webkit-text-stroke: 2px var(--text-color);
-            filter: var(--heart-filter);
-        }
-        .heart-btn.liked {
-            color: #ff3b30;
-            -webkit-text-stroke: 0px transparent;
-            filter: none;
+        .heart-svg:hover { transform: scale(1.2); }
+        .heart-svg.liked {
+            fill: #ff3b30;
+            stroke: #ff3b30;
         }
         
         .updates-section {
@@ -170,15 +161,8 @@
             margin-left: auto;
         }
         
-        .title-block h1 {
-            font-size: 2.5rem;
-            margin: 10px 0;
-        }
-
-        .title-block h2 {
-            font-size: 1.5rem;
-            margin: 0;
-        }
+        .title-block h1 { font-size: 2.5rem; margin: 10px 0; }
+        .title-block h2 { font-size: 1.5rem; margin: 0; }
 
         .search-container { 
             position: relative; 
@@ -264,10 +248,7 @@
             transform: translateY(-5px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        .cat-item h2 {
-            font-size: 1.2rem;
-            margin: 0 0 10px 0;
-        }
+        .cat-item h2 { font-size: 1.2rem; margin: 0 0 10px 0; }
         .cat-item img { width: 60px; pointer-events: none; height: auto; }
 
         .modal-overlay {
@@ -309,41 +290,24 @@
             width: 60px;
             height: 34px;
         }
-        .switch input { 
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
+        .switch input { opacity: 0; width: 0; height: 0; }
         .slider {
-            position: absolute;
-            cursor: pointer;
+            position: absolute; cursor: pointer;
             top: 0; left: 0; right: 0; bottom: 0;
             background-color: var(--slider-bg);
-            transition: .4s;
-            border-radius: 34px;
+            transition: .4s; border-radius: 34px;
         }
         .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
+            position: absolute; content: "";
+            height: 26px; width: 26px; left: 4px; bottom: 4px;
             background-color: var(--slider-knob);
-            transition: .4s;
-            border-radius: 50%;
+            transition: .4s; border-radius: 50%;
         }
-        input:checked + .slider {
-            background-color: #000000;
-        }
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
+        input:checked + .slider { background-color: #000000; }
+        input:checked + .slider:before { transform: translateX(26px); }
 
         .toast {
-            position: fixed;
-            top: -100px;
-            left: 50%;
+            position: fixed; top: -100px; left: 50%;
             transform: translateX(-50%);
             background: var(--toast-bg);
             color: var(--toast-text);
@@ -412,7 +376,7 @@
             <aside class="updates-section" id="update-trigger">
                 <h2>Обновление v1.4</h2>
                 <div class="update-date">Дата выхода: 27.05.2026</div>
-                <div class="update-date">Время: 19:40</div>
+                <div class="update-date">Время: 21:50</div>
             </aside>
         </div>
 
@@ -438,22 +402,20 @@
         </main>
     </div>
 
-    <!-- Модалка обновлений -->
     <div class="modal-overlay" id="modal-overlay">
         <div class="modal-window">
             <span class="modal-close" id="modal-close">&times;</span>
             <h2>Полный список обновлений v1.4</h2>
-            <p>Дата релиза: 27 мая 2026 года, 19:40</p>
+            <p>Дата релиза: 27 мая 2026 года, 21:50</p>
             <ul style="line-height: 1.8; padding-left: 20px;">
-                <li><strong>Интеграция Избранного:</strong> Теперь у каждого элемента есть кнопка-сердечко для сохранения любимых идей.</li>
-                <li><strong>Вкладка «Избранное»:</strong> Быстрый доступ ко всем лайкнутым идеям прямо из шапки сайта.</li>
-                <li><strong>Сохранение данных:</strong> Все выбранные идеи автоматически записываются в кэш браузера и не пропадают при перезапуске страницы.</li>
-                <li>Улучшена общая адаптивность скриптов.</li>
+                <li><strong>Поддержка iOS устройств:</strong> Все сердечки переведены на SVG формат. Теперь они стабильно отображаются на iPhone.</li>
+                <li><strong>Вкладка «Избранное»:</strong> Быстрый доступ к отлайканным идеям из шапки сайта.</li>
+                <li><strong>Локальная память:</strong> Ваши лайки не сбросятся после перезагрузки страницы.</li>
+                <li>Полная оптимизация верстки под мобильные дисплеи.</li>
             </ul>
         </div>
     </div>
 
-    <!-- Модалка настроек -->
     <div class="modal-overlay" id="settings-overlay">
         <div class="modal-window">
             <span class="modal-close" id="settings-close">&times;</span>
@@ -468,7 +430,6 @@
         </div>
     </div>
 
-    <!-- Модалка категорий -->
     <div class="modal-overlay" id="category-overlay">
         <div class="modal-window">
             <span class="modal-close" id="category-close">&times;</span>
@@ -477,7 +438,6 @@
         </div>
     </div>
 
-    <!-- Новая модалка ИЗБРАННОГО -->
     <div class="modal-overlay" id="fav-overlay">
         <div class="modal-window">
             <span class="modal-close" id="fav-close">&times;</span>
@@ -523,7 +483,6 @@
             { text: "Построить самую высокую башню из подручных предметов", category: "Развлечение" }
         ];
 
-        // Получение избранного из localStorage
         let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
         function saveFavorites() {
@@ -534,14 +493,13 @@
             const index = favorites.findIndex(f => f.text === item.text);
             if (index > -1) {
                 favorites.splice(index, 1);
-                heartElement.className = "heart-btn unliked";
+                heartElement.classList.remove("liked");
             } else {
                 favorites.push(item);
-                heartElement.className = "heart-btn liked";
+                heartElement.classList.add("liked");
             }
             saveFavorites();
             
-            // Динамически обновляем видимые списки, чтобы лайки синхронизировались
             const savedIdeas = JSON.parse(localStorage.getItem('savedIdeas')) || [];
             renderIdeas(savedIdeas);
             
@@ -560,10 +518,15 @@
             const spanText = document.createElement("span");
             spanText.innerText = `${item.text.toUpperCase()} (${item.category.toUpperCase()})`;
             
-            const heart = document.createElement("span");
-            const isLiked = favorites.some(f => f.text === item.text);
-            heart.className = isLiked ? "heart-btn liked" : "heart-btn unliked";
-            heart.innerText = "❤";
+            const heart = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            heart.setAttribute("viewBox", "0 0 24 24");
+            heart.classList.add("heart-svg");
+            heart.innerHTML = '<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>';
+            
+            if (favorites.some(f => f.text === item.text)) {
+                heart.classList.add("liked");
+            }
+            
             heart.addEventListener("click", (e) => {
                 e.stopPropagation();
                 toggleFav(item, heart);
@@ -586,7 +549,7 @@
             const favList = document.getElementById("fav-ideas-list");
             favList.innerHTML = "";
             if (favorites.length === 0) {
-                favList.innerHTML = "<div class='idea-item'>Здесь пока ничего нет. Добавляйте идеи с помощью ❤!</div>";
+                favList.innerHTML = "<div class='idea-item'>Здесь пока ничего нет. Нажимайте на ❤ у любых идей!</div>";
                 return;
             }
             favorites.forEach(item => {
@@ -672,7 +635,6 @@
             }
         }
 
-        // Логика подсветки Нового
         document.getElementById("new-trigger").addEventListener("click", (e) => {
             e.preventDefault();
             const box = document.getElementById("ideas-box");
@@ -680,19 +642,16 @@
             setTimeout(() => box.classList.remove("highlight"), 1000);
         });
 
-        // Модалка обновлений
         const overlay = document.getElementById("modal-overlay");
         document.getElementById("update-trigger").addEventListener("click", () => overlay.classList.add("active"));
         document.getElementById("modal-close").addEventListener("click", () => overlay.classList.remove("active"));
         overlay.addEventListener("click", (e) => { if(e.target === overlay) overlay.classList.remove("active"); });
 
-        // Модалка настроек
         const settingsOverlay = document.getElementById("settings-overlay");
         document.getElementById("settings-trigger").addEventListener("click", () => settingsOverlay.classList.add("active"));
         document.getElementById("settings-close").addEventListener("click", () => settingsOverlay.classList.remove("active"));
         settingsOverlay.addEventListener("click", (e) => { if(e.target === settingsOverlay) settingsOverlay.classList.remove("active"); });
 
-        // Модалка Избранного
         const favOverlay = document.getElementById("fav-overlay");
         document.getElementById("fav-trigger").addEventListener("click", () => {
             renderFavoritesList();
@@ -701,7 +660,6 @@
         document.getElementById("fav-close").addEventListener("click", () => favOverlay.classList.remove("active"));
         favOverlay.addEventListener("click", (e) => { if(e.target === favOverlay) favOverlay.classList.remove("active"); });
 
-        // Переключатель темы
         const themeToggle = document.getElementById("theme-toggle");
         function setTheme(theme) {
             document.body.classList.add('theme-changing');
@@ -721,7 +679,6 @@
             document.documentElement.setAttribute('data-theme', 'dark');
         }
 
-        // Категории
         const catTiles = document.querySelectorAll('.cat-item');
         const catOverlay = document.getElementById('category-overlay');
         const catTitle = document.getElementById('category-modal-title');
@@ -739,7 +696,6 @@
         catClose.addEventListener("click", () => catOverlay.classList.remove("active"));
         catOverlay.addEventListener("click", (e) => { if(e.target === catOverlay) catOverlay.classList.remove("active"); });
 
-        // Умный поиск
         const searchInput = document.getElementById("search-input");
         const searchResults = document.getElementById("search-results");
 
@@ -797,7 +753,6 @@
             }
         });
 
-        // Случайная идея
         const randomBtn = document.getElementById("random-btn");
         const toast = document.getElementById("toast");
 
