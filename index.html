@@ -1,13 +1,649 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + Vue</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>FINDIdea</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;700&display=swap');
+
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #000000;
+            --block-bg: #f0f0f0;
+            --card-bg: #ffffff;
+            --card-text: #333333;
+            --input-border: #000000;
+            --cat-bg: #dddddd;
+            --modal-bg: #ffffff;
+            --modal-text: #000000;
+            --overlay-bg: rgba(0, 0, 0, 0.5);
+            --slider-bg: #ccc;
+            --slider-knob: #ffffff;
+            --toast-bg: #000000;
+            --toast-text: #ffffff;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --block-bg: #1e1e1e;
+            --card-bg: #2d2d2d;
+            --card-text: #e0e0e0;
+            --input-border: #ffffff;
+            --cat-bg: #333333;
+            --modal-bg: #1e1e1e;
+            --modal-text: #ffffff;
+            --overlay-bg: rgba(0, 0, 0, 0.7);
+            --slider-bg: #444;
+            --slider-knob: #ffffff;
+            --toast-bg: #ffffff;
+            --toast-text: #000000;
+        }
+
+        body { 
+            font-family: 'Google Sans', sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            font-weight: 700;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            background-image: linear-gradient(to bottom, var(--bg-color) 0%, var(--bg-color) 100%);
+            background-size: 100% 200%;
+            background-position: top center;
+            transition: background-position 0.8s ease, background-color 0.8s ease, color 0.5s ease;
+        }
+
+        body.theme-changing {
+            background-position: bottom center;
+        }
+
+        .header { display: flex; justify-content: space-between; align-items: center; transition: color 0.5s ease; }
+        .logo-block { display: flex; align-items: center; }
+        .logo { width: 80px; }
+        .nav-menu { display: flex; list-style: none; gap: 20px; align-items: center; }
+        .link { text-decoration: none; color: var(--text-color); cursor: pointer; transition: color 0.5s ease; display: flex; align-items: center; gap: 5px; }
+
+        .container { display: grid; grid-template-columns: 250px 1fr; gap: 40px; }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+            top: 50px;
+        }
+
+        .new-ideas-section { 
+            background: var(--block-bg); 
+            padding: 20px; 
+            border-radius: 10px; 
+            width: 250px; 
+            height: 280px; 
+            display: flex; 
+            flex-direction: column; 
+            transition: border 0.5s ease, box-shadow 0.5s ease, background-color 0.8s ease;
+            border: 3px solid transparent; 
+            box-sizing: border-box;
+        }
+
+        #ideas-list { overflow-y: auto; flex-grow: 1; margin-top: 10px; }
+        
+        .highlight { border: 3px solid var(--text-color); box-shadow: 0 0 15px rgba(0,0,0,0.2); }
+
+        .idea-item { 
+            font-size: 1.0rem; 
+            color: var(--card-text); 
+            margin-top: 10px; 
+            padding: 12px; 
+            background: var(--card-bg); 
+            border-left: 5px solid var(--text-color);
+            transition: background-color 0.8s ease, color 0.5s ease, border-color 0.5s ease;
+        }
+        
+        .updates-section {
+            background: var(--block-bg); 
+            padding: 20px; 
+            border-radius: 10px;
+            width: 250px; 
+            min-height: 140px;
+            box-sizing: border-box; 
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.8s ease;
+        }
+        .updates-section:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .update-date { font-size: 0.85rem; color: var(--text-color); opacity: 0.7; margin-top: 8px; font-weight: 400; transition: color 0.5s ease; }
+
+        .title-block { margin-top: 50px; text-align: right; margin-right: 20px; margin-left: auto; width: 640px; }
+        
+        .search-container { position: relative; margin-top: 20px; display: flex; flex-direction: column; align-items: flex-end; }
+        
+        .input-box { 
+            padding: 15px; 
+            width: 610px; 
+            border: 1px solid var(--input-border); 
+            background: var(--bg-color);
+            color: var(--text-color);
+            outline: none; 
+            font-size: 1.2rem; 
+            transition: background-color 0.8s ease, color 0.5s ease, border-color 0.5s ease;
+        }
+
+        .search-results {
+            position: absolute;
+            top: 55px;
+            right: 0;
+            width: 642px;
+            background: var(--card-bg);
+            border: 1px solid var(--input-border);
+            border-top: none;
+            box-sizing: border-box;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            text-align: left;
+            z-index: 100;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        }
+        .search-results.active { display: block; }
+        .search-category-title { font-size: 0.85rem; color: var(--text-color); opacity: 0.7; padding: 10px 15px; background: var(--block-bg); }
+        .search-item { padding: 15px; cursor: pointer; color: var(--card-text); border-bottom: 1px solid var(--block-bg); font-weight: 400; }
+        .search-item:hover { background: var(--block-bg); }
+
+        .random-btn {
+            margin-top: 15px;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Google Sans', sans-serif;
+            background: var(--text-color);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .random-btn:hover:not(.locked) { transform: scale(1.05); }
+        .random-btn.locked { opacity: 0.5; cursor: not-allowed; }
+
+        .categories {
+            display: grid; grid-template-columns: repeat(3, 200px); gap: 20px; margin-top: 40px;
+            margin-right: 20px; margin-left: auto; justify-content: end;
+        }
+        .cat-item { 
+            background-color: var(--cat-bg); 
+            padding: 20px; 
+            text-align: center; 
+            transition: background-color 0.8s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+        }
+        .cat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .cat-item img { width: 60px; pointer-events: none; }
+
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--overlay-bg); 
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; 
+            transition: opacity 0.3s ease; 
+            z-index: 1000;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        
+        .modal-window { 
+            background: var(--modal-bg); 
+            color: var(--modal-text);
+            padding: 40px; 
+            border-radius: 12px; 
+            width: 500px; 
+            position: relative; 
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+        .modal-close { position: absolute; top: 20px; right: 25px; font-size: 2rem; cursor: pointer; color: var(--modal-text); }
+
+        .settings-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .switch input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--slider-bg);
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: var(--slider-knob);
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #000000;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .toast {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--toast-bg);
+            color: var(--toast-text);
+            padding: 15px 35px;
+            border-radius: 30px;
+            font-weight: 700;
+            z-index: 9999;
+            transition: top 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            pointer-events: none;
+        }
+        .toast.show { top: 30px; }
+    </style>
+</head>
+<body>
+
+    <div id="toast" class="toast">подождите час или менее</div>
+
+    <header class="header">
+        <div class="logo-block">
+            <img class="logo" src="logo.png" alt="Logo">
+            <span>FINDIdea</span>
+        </div>
+        <nav>
+            <ul class="nav-menu">
+                <li><a class="link" id="new-trigger">Новое</a></li>
+                <li><a class="link" id="settings-trigger">⚙️ Настройки</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="sidebar">
+            <aside class="new-ideas-section" id="ideas-box">
+                <h2>Новые идеи:</h2>
+                <div id="ideas-list"></div>
+            </aside>
+
+            <aside class="updates-section" id="update-trigger">
+                <h2>Обновление v1.3</h2>
+                <div class="update-date">Дата выхода: 27.05.2026</div>
+                <div class="update-date">Время: 16:15</div>
+            </aside>
+        </div>
+
+        <main>
+            <div class="title-block">
+                <h2>Не знаете, чем заняться?</h2>
+                <h1>Мы можем найти!</h1>
+                <div class="search-container">
+                    <input class="input-box" type="text" placeholder="Поиск..." id="search-input">
+                    <div id="search-results" class="search-results"></div>
+                    <button id="random-btn" class="random-btn">⚡ Случайная идея</button>
+                </div>
+            </div>
+
+            <div class="categories">
+                <div class="cat-item"><h2>ДОМ</h2><img src="material-symbols_home-rounded.png" alt=""></div>
+                <div class="cat-item"><h2>ГОРОД</h2><img src="tdesign_town-filled.png" alt=""></div>
+                <div class="cat-item"><h2>УЛИЦА</h2><img src="material-symbols_home-rounded.png" alt=""></div>
+                <div class="cat-item"><h2>ИГРЫ</h2><img src="icon-park-solid_game.png" alt=""></div>
+                <div class="cat-item"><h2>СКОРО..</h2><img src="dashicons_no.png" alt=""></div>
+                <div class="cat-item"><h2>СКОРО..</h2><img src="dashicons_no.png" alt=""></div>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-window">
+            <span class="modal-close" id="modal-close">&times;</span>
+            <h2>Полный список обновлений v1.3</h2>
+            <p>Дата релиза: 27 мая 2026 года, 16:15</p>
+            <ul style="line-height: 1.8;">
+                <li>Добавлен интеллектуальный поиск с выводом категорий над результатами.</li>
+                <li>Внедрена кнопка «Случайная идея» с ограничением использования 1 раз в час.</li>
+                <li>Реализована система всплывающих уведомлений.</li>
+                <li>Полностью оптимизирован код.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="settings-overlay">
+        <div class="modal-window">
+            <span class="modal-close" id="settings-close">&times;</span>
+            <h2>Панель настроек</h2>
+            <div class="settings-row">
+                <span>Тёмная тема</span>
+                <label class="switch">
+                    <input type="checkbox" id="theme-toggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="category-overlay">
+        <div class="modal-window">
+            <span class="modal-close" id="category-close">&times;</span>
+            <h2 id="category-modal-title">Категория</h2>
+            <div id="category-ideas-list" style="margin-top: 20px;"></div>
+        </div>
+    </div>
+
+    <script>
+        const ideas = [
+            { text: "Поиграть в GTA", category: "Игры" },
+            { text: "Поиграть в Minecraft", category: "Игры" },
+            { text: "Сыграть в шахматы", category: "Игры" },
+            { text: "Пройти Portal", category: "Игры" },
+            { text: "Посмотреть сериал", category: "Игры" },
+            { text: "Прибраться на столе", category: "Дом" },
+            { text: "Сделать уроки", category: "Дом" },
+            { text: "Почитать книгу", category: "Дом" },
+            { text: "Приготовить ужин", category: "Дом" },
+            { text: "Сделать перестановку", category: "Дом" },
+            { text: "Сходить за хлебом", category: "Город" },
+            { text: "Сходить в кино", category: "Город" },
+            { text: "Посетить музей", category: "Город" },
+            { text: "Погулять в парке", category: "Город" },
+            { text: "Сходить в кафе", category: "Город" },
+            { text: "Покататься на велике", category: "Улица" },
+            { text: "Поиграть в футбол", category: "Улица" },
+            { text: "Сделать пробежку", category: "Улица" },
+            { text: "Покормить птиц", category: "Улица" },
+            { text: "Пройтись пешком", category: "Улица" }
+        ];
+
+        const exclusiveRandomIdeas = [
+            { text: "Изучить 10 новых тегов в HTML", category: "Саморазвитие" },
+            { text: "Нарисовать собственное граффити на бумаге", category: "Творчество" },
+            { text: "Сделать бумажный самолетик новой сложной формы", category: "Хобби" },
+            { text: "Послушать новый музыкальный альбом от начала до конца", category: "Отдых" },
+            { text: "Придумать сюжет для собственной мини-игры", category: "Творчество" },
+            { text: "Выучить 5 фраз на редком иностранном языке", category: "Саморазвитие" },
+            { text: "Попробовать написать код без единой ошибки с первого раза", category: "Испытание" },
+            { text: "Устроить фотосессию необычных объектов в комнате", category: "Хобби" },
+            { text: "Придумать шифр и написать им записку", category: "Квесты" },
+            { text: "Построить самую высокую башню из подручных предметов", category: "Развлечение" }
+        ];
+
+        function renderIdeas(items) {
+            const list = document.getElementById("ideas-list");
+            list.innerHTML = "";
+            items.forEach(item => {
+                const div = document.createElement("div");
+                div.className = "idea-item";
+                div.innerText = `${item.text.toUpperCase()} (${item.category})`;
+                list.appendChild(div);
+            });
+        }
+
+        function generateNewIdeas() {
+            let tempIdeas = [...ideas];
+            let selected = [];
+            for(let i = 0; i < 3; i++) {
+                if (tempIdeas.length === 0) break;
+                const randomIndex = Math.floor(Math.random() * tempIdeas.length);
+                selected.push(tempIdeas[randomIndex]);
+                tempIdeas.splice(randomIndex, 1);
+            }
+            return selected;
+        }
+
+        function generateCategoryIdeas() {
+            const categories = ["Дом", "Город", "Улица", "Игры"];
+            let catIdeas = {};
+            categories.forEach(cat => {
+                let filtered = ideas.filter(i => i.category.toLowerCase() === cat.toLowerCase());
+                let selected = [];
+                for(let i = 0; i < 3; i++) {
+                    if (filtered.length === 0) break;
+                    let rand = Math.floor(Math.random() * filtered.length);
+                    selected.push(filtered[rand]);
+                    filtered.splice(rand, 1);
+                }
+                catIdeas[cat] = selected;
+            });
+            return catIdeas;
+        }
+
+        function checkAndUpdate() {
+            const now = new Date().getTime();
+            const lastUpdate = localStorage.getItem('lastUpdate');
+            
+            if (!lastUpdate || (now - lastUpdate >= 3600000)) {
+                const newIdeas = generateNewIdeas();
+                const newCatIdeas = generateCategoryIdeas();
+                
+                localStorage.setItem('savedIdeas', JSON.stringify(newIdeas));
+                localStorage.setItem('savedCatIdeas', JSON.stringify(newCatIdeas));
+                localStorage.setItem('lastUpdate', now);
+                
+                renderIdeas(newIdeas);
+            } else {
+                const savedIdeas = JSON.parse(localStorage.getItem('savedIdeas'));
+                let savedCatIdeas = JSON.parse(localStorage.getItem('savedCatIdeas'));
+                
+                if (!savedCatIdeas) {
+                    savedCatIdeas = generateCategoryIdeas();
+                    localStorage.setItem('savedCatIdeas', JSON.stringify(savedCatIdeas));
+                }
+                
+                renderIdeas(savedIdeas);
+            }
+        }
+
+        document.getElementById("new-trigger").addEventListener("click", (e) => {
+            e.preventDefault();
+            const box = document.getElementById("ideas-box");
+            box.classList.add("highlight");
+            setTimeout(() => box.classList.remove("highlight"), 1000);
+        });
+
+        const overlay = document.getElementById("modal-overlay");
+        document.getElementById("update-trigger").addEventListener("click", () => overlay.classList.add("active"));
+        document.getElementById("modal-close").addEventListener("click", () => overlay.classList.remove("active"));
+        overlay.addEventListener("click", (e) => { if(e.target === overlay) overlay.classList.remove("active"); });
+
+        const settingsOverlay = document.getElementById("settings-overlay");
+        document.getElementById("settings-trigger").addEventListener("click", () => settingsOverlay.classList.add("active"));
+        document.getElementById("settings-close").addEventListener("click", () => settingsOverlay.classList.remove("active"));
+        settingsOverlay.addEventListener("click", (e) => { if(e.target === settingsOverlay) settingsOverlay.classList.remove("active"); });
+
+        const themeToggle = document.getElementById("theme-toggle");
+        
+        function setTheme(theme) {
+            document.body.classList.add('theme-changing');
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            
+            setTimeout(() => {
+                document.body.classList.remove('theme-changing');
+            }, 800);
+        }
+
+        themeToggle.addEventListener("change", (e) => {
+            if (e.target.checked) {
+                setTheme('dark');
+            } else {
+                setTheme('light');
+            }
+        });
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            themeToggle.checked = true;
+            document.documentElement.setAttribute('data-theme', 'dark');
+        } else {
+            themeToggle.checked = false;
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+
+        const catTiles = document.querySelectorAll('.cat-item');
+        const catOverlay = document.getElementById('category-overlay');
+        const catTitle = document.getElementById('category-modal-title');
+        const catList = document.getElementById('category-ideas-list');
+        const catClose = document.getElementById('category-close');
+
+        catTiles.forEach(tile => {
+            tile.addEventListener('click', () => {
+                const title = tile.querySelector('h2').innerText;
+                catTitle.innerText = title;
+                catList.innerHTML = "";
+                
+                if (title === "СКОРО..") {
+                    catList.innerHTML = "<div class='idea-item'>Эта категория скоро появится!</div>";
+                } else {
+                    const savedCatIdeas = JSON.parse(localStorage.getItem('savedCatIdeas')) || {};
+                    const properCaseCat = title.charAt(0).toUpperCase() + title.slice(1).toLowerCase();
+                    const ideasToShow = savedCatIdeas[properCaseCat] || [];
+                    
+                    if (ideasToShow.length > 0) {
+                        ideasToShow.forEach(item => {
+                            const div = document.createElement("div");
+                            div.className = "idea-item";
+                            div.innerText = item.text.toUpperCase();
+                            catList.appendChild(div);
+                        });
+                    } else {
+                        catList.innerHTML = "<div class='idea-item'>Нет доступных идей</div>";
+                    }
+                }
+                catOverlay.classList.add('active');
+            });
+        });
+
+        catClose.addEventListener("click", () => catOverlay.classList.remove("active"));
+        catOverlay.addEventListener("click", (e) => { if(e.target === catOverlay) catOverlay.classList.remove("active"); });
+
+        const searchInput = document.getElementById("search-input");
+        const searchResults = document.getElementById("search-results");
+
+        searchInput.addEventListener("input", (e) => {
+            const val = e.target.value.toLowerCase().trim();
+            searchResults.innerHTML = "";
+            
+            if (!val) {
+                searchResults.classList.remove("active");
+                return;
+            }
+
+            const matched = ideas.filter(i => i.text.toLowerCase().includes(val));
+            
+            if (matched.length === 0) {
+                searchResults.innerHTML = "<div class='search-item'>Ничего не найдено</div>";
+                searchResults.classList.add("active");
+                return;
+            }
+
+            const grouped = {};
+            matched.forEach(i => {
+                if (!grouped[i.category]) grouped[i.category] = [];
+                grouped[i.category].push(i);
+            });
+
+            for (const cat in grouped) {
+                const title = document.createElement("div");
+                title.className = "search-category-title";
+                title.innerText = cat.toUpperCase();
+                searchResults.appendChild(title);
+
+                grouped[cat].forEach(item => {
+                    const div = document.createElement("div");
+                    div.className = "search-item";
+                    div.innerText = item.text;
+                    div.addEventListener("click", () => {
+                        catTitle.innerText = item.category;
+                        catList.innerHTML = "";
+                        const itemDiv = document.createElement("div");
+                        itemDiv.className = "idea-item";
+                        itemDiv.innerText = item.text.toUpperCase();
+                        catList.appendChild(itemDiv);
+                        catOverlay.classList.add("active");
+                        searchResults.classList.remove("active");
+                        searchInput.value = "";
+                    });
+                    searchResults.appendChild(div);
+                });
+            }
+            
+            searchResults.classList.add("active");
+        });
+
+        document.addEventListener("click", (e) => {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.classList.remove("active");
+            }
+        });
+
+        const randomBtn = document.getElementById("random-btn");
+        const toast = document.getElementById("toast");
+
+        function updateRandomBtnState() {
+            const last = localStorage.getItem("lastRandom");
+            const now = new Date().getTime();
+            if (last && (now - last < 3600000)) {
+                randomBtn.classList.add("locked");
+                randomBtn.innerHTML = "🔒 Случайная идея";
+            } else {
+                randomBtn.classList.remove("locked");
+                randomBtn.innerHTML = "⚡ Случайная идея";
+            }
+        }
+
+        randomBtn.addEventListener("click", () => {
+            const last = localStorage.getItem("lastRandom");
+            const now = new Date().getTime();
+            if (last && (now - last < 3600000)) {
+                toast.classList.add("show");
+                setTimeout(() => toast.classList.remove("show"), 3000);
+            } else {
+                const randIdea = exclusiveRandomIdeas[Math.floor(Math.random() * exclusiveRandomIdeas.length)];
+                
+                catTitle.innerText = "СЛУЧАЙНАЯ ИДЕЯ";
+                catList.innerHTML = "";
+                const div = document.createElement("div");
+                div.className = "idea-item";
+                div.innerText = randIdea.text.toUpperCase() + " (" + randIdea.category + ")";
+                catList.appendChild(div);
+                catOverlay.classList.add("active");
+                
+                localStorage.setItem("lastRandom", now);
+                updateRandomBtnState();
+            }
+        });
+
+        updateRandomBtnState();
+        checkAndUpdate();
+        setInterval(checkAndUpdate, 60000);
+        setInterval(updateRandomBtnState, 60000);
+    </script>
+</body>
 </html>
