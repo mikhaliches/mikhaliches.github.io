@@ -135,10 +135,7 @@
             flex-shrink: 0;
         }
         .heart-svg:hover { transform: scale(1.2); }
-        .heart-svg.liked {
-            fill: #ff3b30;
-            stroke: #ff3b30;
-        }
+        .heart-svg.liked { fill: #ff3b30; stroke: #ff3b30; }
         
         .updates-section {
             background: var(--block-bg); 
@@ -281,8 +278,23 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 30px;
+            margin-top: 20px;
         }
+        
+        .lang-select {
+            padding: 8px 12px;
+            font-size: 1rem;
+            font-family: 'Google Sans', sans-serif;
+            font-weight: 700;
+            border-radius: 8px;
+            border: 2px solid var(--text-color);
+            background: var(--bg-color);
+            color: var(--text-color);
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
         .switch {
             position: relative;
             display: inline-block;
@@ -349,7 +361,7 @@
 </head>
 <body>
 
-    <div id="toast" class="toast">подождите час или менее</div>
+    <div id="toast" class="toast" data-i18n="toast-wait">подождите час или менее</div>
 
     <header class="header">
         <div class="logo-block">
@@ -358,9 +370,9 @@
         </div>
         <nav>
             <ul class="nav-menu">
-                <li><a class="link" id="new-trigger">Новое</a></li>
-                <li><a class="link" id="fav-trigger">❤️ Избранное</a></li>
-                <li><a class="link" id="settings-trigger">⚙️ Настройки</a></li>
+                <li><a class="link" id="new-trigger" data-i18n="nav-new">Новое</a></li>
+                <li><a class="link" id="fav-trigger" data-i18n="nav-fav">❤️ Избранное</a></li>
+                <li><a class="link" id="settings-trigger" data-i18n="nav-settings">⚙️ Настройки</a></li>
             </ul>
         </nav>
     </header>
@@ -368,35 +380,35 @@
     <div class="container">
         <div class="sidebar">
             <aside class="new-ideas-section" id="ideas-box">
-                <h2>Новые идеи:</h2>
+                <h2 data-i18n="aside-new">Новые идеи:</h2>
                 <div id="ideas-list"></div>
             </aside>
 
             <aside class="updates-section" id="update-trigger">
-                <h2>Обновление v1.5</h2>
-                <div class="update-date">Дата выхода: 27.05.2026</div>
-                <div class="update-date">Время: 21:55</div>
+                <h2 data-i18n="aside-upd">Обновление v1.6</h2>
+                <div class="update-date" data-i18n="upd-date">Дата выхода: 27.05.2026</div>
+                <div class="update-date" data-i18n="upd-time">Время: 22:15</div>
             </aside>
         </div>
 
         <main>
             <div class="title-block">
-                <h2>Не знаете, чем заняться?</h2>
-                <h1>Мы можем найти!</h1>
+                <h2 data-i18n="title-sub">Не знаете, чем заняться?</h2>
+                <h1 data-i18n="title-main">Мы можем найти!</h1>
                 <div class="search-container">
-                    <input class="input-box" type="text" placeholder="Поиск..." id="search-input">
+                    <input class="input-box" type="text" placeholder="Поиск..." id="search-input" data-i18n="search-ph">
                     <div id="search-results" class="search-results"></div>
-                    <button id="random-btn" class="random-btn">⚡ Случайная идея</button>
+                    <button id="random-btn" class="random-btn"><span id="random-btn-text" data-i18n="btn-random">⚡ Случайная идея</span></button>
                 </div>
             </div>
 
             <div class="categories">
-                <div class="cat-item"><h2>ДОМ</h2><img src="material-symbols_home-rounded.png" alt=""></div>
-                <div class="cat-item"><h2>ГОРОД</h2><img src="tdesign_town-filled.png" alt=""></div>
-                <div class="cat-item"><h2>УЛИЦА</h2><img src="material-symbols_home-rounded.png" alt=""></div>
-                <div class="cat-item"><h2>ИГРЫ</h2><img src="icon-park-solid_game.png" alt=""></div>
-                <div class="cat-item"><h2>СКОРО..</h2><img src="dashicons_no.png" alt=""></div>
-                <div class="cat-item"><h2>СКОРО..</h2><img src="dashicons_no.png" alt=""></div>
+                <div class="cat-item" data-cat="Дом"><h2 data-i18n="cat-home">ДОМ</h2><img src="material-symbols_home-rounded.png" alt=""></div>
+                <div class="cat-item" data-cat="Город"><h2 data-i18n="cat-city">ГОРОД</h2><img src="tdesign_town-filled.png" alt=""></div>
+                <div class="cat-item" data-cat="Улица"><h2 data-i18n="cat-street">УЛИЦА</h2><img src="material-symbols_home-rounded.png" alt=""></div>
+                <div class="cat-item" data-cat="Игры"><h2 data-i18n="cat-games">ИГРЫ</h2><img src="icon-park-solid_game.png" alt=""></div>
+                <div class="cat-item" data-cat="Скоро"><h2 data-i18n="cat-soon1">СКОРО..</h2><img src="dashicons_no.png" alt=""></div>
+                <div class="cat-item" data-cat="Скоро"><h2 data-i18n="cat-soon2">СКОРО..</h2><img src="dashicons_no.png" alt=""></div>
             </div>
         </main>
     </div>
@@ -404,12 +416,12 @@
     <div class="modal-overlay" id="modal-overlay">
         <div class="modal-window">
             <span class="modal-close" id="modal-close">&times;</span>
-            <h2>Полный список обновлений v1.5</h2>
-            <p>Дата релиза: 27 мая 2026 года, 21:55</p>
+            <h2 data-i18n="mod-upd-title">Полный список обновлений v1.6</h2>
+            <p data-i18n="mod-upd-p">Дата релиза: 27 мая 2026 года, 22:15</p>
             <ul style="line-height: 1.8; padding-left: 20px;">
-                <li><strong>Масштабное расширение библиотеки:</strong> В базу данных добавлено огромное количество новых разнообразных идей для всех основных категорий.</li>
-                <li><strong>Обновленные списки:</strong> Расширен пул эксклюзивных редких идей для кнопки случайного выбора.</li>
-                <li>Все прошлые функции (SVG-сердечки, Избранное, Поиск, Темы) работают стабильно в штатном режиме.</li>
+                <li data-i18n="mod-upd-li1"><strong>Мультиязычность:</strong> Добавлена полная поддержка английского языка (переключатель в настройках).</li>
+                <li data-i18n="mod-upd-li2"><strong>Перевод базы:</strong> Все 50 идей и категории теперь имеют английскую версию.</li>
+                <li data-i18n="mod-upd-li3"><strong>Сохранение языка:</strong> Выбранный язык запоминается для следующих сессий.</li>
             </ul>
         </div>
     </div>
@@ -417,13 +429,20 @@
     <div class="modal-overlay" id="settings-overlay">
         <div class="modal-window">
             <span class="modal-close" id="settings-close">&times;</span>
-            <h2>Панель настроек</h2>
+            <h2 data-i18n="mod-set-title">Панель настроек</h2>
             <div class="settings-row">
-                <span>Тёмная тема</span>
+                <span data-i18n="set-theme">Тёмная тема</span>
                 <label class="switch">
                     <input type="checkbox" id="theme-toggle">
                     <span class="slider"></span>
                 </label>
+            </div>
+            <div class="settings-row">
+                <span data-i18n="set-lang">Язык / Language</span>
+                <select id="lang-select" class="lang-select">
+                    <option value="ru">Русский</option>
+                    <option value="en">English</option>
+                </select>
             </div>
         </div>
     </div>
@@ -439,102 +458,176 @@
     <div class="modal-overlay" id="fav-overlay">
         <div class="modal-window">
             <span class="modal-close" id="fav-close">&times;</span>
-            <h2>❤️ Избранные идеи</h2>
+            <h2 data-i18n="mod-fav-title">❤️ Избранные идеи</h2>
             <div id="fav-ideas-list" style="margin-top: 20px; max-height: 60vh; overflow-y: auto;"></div>
         </div>
     </div>
 
     <script>
+        // СЛОВАРЬ ПЕРЕВОДОВ ИНТЕРФЕЙСА
+        const translations = {
+            ru: {
+                "nav-new": "Новое", "nav-fav": "❤️ Избранное", "nav-settings": "⚙️ Настройки",
+                "title-sub": "Не знаете, чем заняться?", "title-main": "Мы можем найти!",
+                "search-ph": "Поиск...", "btn-random": "⚡ Случайная идея", "btn-random-locked": "🔒 Случайная идея",
+                "cat-home": "ДОМ", "cat-city": "ГОРОД", "cat-street": "УЛИЦА", "cat-games": "ИГРЫ",
+                "cat-soon1": "СКОРО..", "cat-soon2": "СКОРО..",
+                "aside-new": "Новые идеи:", "aside-upd": "Обновление v1.6",
+                "upd-date": "Дата выхода: 27.05.2026", "upd-time": "Время: 22:15",
+                "mod-upd-title": "Полный список обновлений v1.6", "mod-upd-p": "Дата релиза: 27 мая 2026 года, 22:15",
+                "mod-upd-li1": "<strong>Мультиязычность:</strong> Добавлена полная поддержка английского языка (переключатель в настройках).",
+                "mod-upd-li2": "<strong>Перевод базы:</strong> Все 50 идей и категории теперь имеют английскую версию.",
+                "mod-upd-li3": "<strong>Сохранение языка:</strong> Выбранный язык запоминается для следующих сессий.",
+                "mod-set-title": "Панель настроек", "set-theme": "Тёмная тема", "set-lang": "Язык / Language",
+                "mod-fav-title": "❤️ Избранные идеи", "toast-wait": "подождите час или менее",
+                "empty-fav": "Здесь пока ничего нет. Нажимайте на ❤ у любых идей!",
+                "empty-cat": "Эта категория скоро появится!", "no-ideas": "Нет доступных идей",
+                "no-found": "Ничего не найдено", "cat-modal-rand": "СЛУЧАЙНАЯ ИДЕЯ"
+            },
+            en: {
+                "nav-new": "New", "nav-fav": "❤️ Favorites", "nav-settings": "⚙️ Settings",
+                "title-sub": "Don't know what to do?", "title-main": "We can find it!",
+                "search-ph": "Search...", "btn-random": "⚡ Random Idea", "btn-random-locked": "🔒 Random Idea",
+                "cat-home": "HOME", "cat-city": "CITY", "cat-street": "STREET", "cat-games": "GAMES",
+                "cat-soon1": "SOON..", "cat-soon2": "SOON..",
+                "aside-new": "New ideas:", "aside-upd": "Update v1.6",
+                "upd-date": "Release date: 05.27.2026", "upd-time": "Time: 22:15",
+                "mod-upd-title": "Full changelog v1.6", "mod-upd-p": "Release date: May 27, 2026, 22:15",
+                "mod-upd-li1": "<strong>Multilingual:</strong> Full English language support added (toggle in settings).",
+                "mod-upd-li2": "<strong>Database Translation:</strong> All 50 ideas and categories now have an English version.",
+                "mod-upd-li3": "<strong>Language persistence:</strong> Your language choice is saved for future sessions.",
+                "mod-set-title": "Settings Panel", "set-theme": "Dark theme", "set-lang": "Language / Язык",
+                "mod-fav-title": "❤️ Favorite ideas", "toast-wait": "please wait an hour or less",
+                "empty-fav": "Nothing here yet. Click ❤ on any ideas!",
+                "empty-cat": "This category will appear soon!", "no-ideas": "No ideas available",
+                "no-found": "Nothing found", "cat-modal-rand": "RANDOM IDEA"
+            }
+        };
+
+        let currentLang = localStorage.getItem('appLang') || 'ru';
+
         const ideas = [
-            { text: "Поиграть в GTA", category: "Игры" },
-            { text: "Поиграть в Minecraft", category: "Игры" },
-            { text: "Сыграть в шахматы", category: "Игры" },
-            { text: "Пройти Portal", category: "Игры" },
-            { text: "Посмотреть сериал", category: "Игры" },
-            { text: "Поиграть в Ведьмака", category: "Игры" },
-            { text: "Поиграть в Counter-Strike", category: "Игры" },
-            { text: "Поиграть в Dota 2", category: "Игры" },
-            { text: "Поиграть в Cyberpunk 2077", category: "Игры" },
-            { text: "Поиграть в Terraria", category: "Игры" },
-            { text: "Поиграть в Brawl Stars", category: "Игры" },
-            { text: "Пройти сюжетную инди-игру", category: "Игры" },
-            { text: "Поиграть в мобильную головоломку", category: "Игры" },
-            { text: "Сыграть в настольную игру онлайн", category: "Игры" },
-            { text: "Поиграть в гонки", category: "Игры" },
+            { text: "Поиграть в GTA", text_en: "Play GTA", category: "Игры", category_en: "Games" },
+            { text: "Поиграть в Minecraft", text_en: "Play Minecraft", category: "Игры", category_en: "Games" },
+            { text: "Сыграть в шахматы", text_en: "Play Chess", category: "Игры", category_en: "Games" },
+            { text: "Пройти Portal", text_en: "Play Portal", category: "Игры", category_en: "Games" },
+            { text: "Посмотреть сериал", text_en: "Watch a TV series", category: "Игры", category_en: "Games" },
+            { text: "Поиграть в Ведьмака", text_en: "Play The Witcher", category: "Игры", category_en: "Games" },
+            { text: "Поиграть в Counter-Strike", text_en: "Play Counter-Strike", category: "Игры", category_en: "Games" },
+            { text: "Поиграть в Dota 2", text_en: "Play Dota 2", category: "Игры", category_en: "Games" },
+            { text: "Поиграть в Cyberpunk 2077", text_en: "Play Cyberpunk 2077", category: "Игры", category_en: "Games" },
+            { text: "Поиграть в Terraria", text_en: "Play Terraria", category: "Игры", category_en: "Games" },
+            { text: "Поиграть в Brawl Stars", text_en: "Play Brawl Stars", category: "Игры", category_en: "Games" },
+            { text: "Пройти сюжетную инди-игру", text_en: "Play a story-driven indie game", category: "Игры", category_en: "Games" },
+            { text: "Поиграть в мобильную головоломку", text_en: "Play a mobile puzzle game", category: "Игры", category_en: "Games" },
+            { text: "Сыграть в настольную игру онлайн", text_en: "Play a board game online", category: "Игры", category_en: "Games" },
+            { text: "Поиграть в гонки", text_en: "Play a racing game", category: "Игры", category_en: "Games" },
             
-            { text: "Прибраться на столе", category: "Дом" },
-            { text: "Сделать уроки", category: "Дом" },
-            { text: "Почитать книгу", category: "Дом" },
-            { text: "Приготовить ужин", category: "Дом" },
-            { text: "Сделать перестановку", category: "Дом" },
-            { text: "Помыть посуду", category: "Дом" },
-            { text: "Полить домашние цветы", category: "Дом" },
-            { text: "Разобрать старые вещи в шкафу", category: "Дом" },
-            { text: "Посмотреть документальный фильм", category: "Дом" },
-            { text: "Сделать зарядку или растяжку", category: "Дом" },
-            { text: "Постирать одежду", category: "Дом" },
-            { text: "Пропылесосить в комнате", category: "Дом" },
-            { text: "Нарисовать рисунок в блокноте", category: "Дом" },
-            { text: "Приготовить новое необычное блюдо", category: "Дом" },
-            { text: "Послушать подкаст на интересную тему", category: "Дом" },
+            { text: "Прибраться на столе", text_en: "Clean up the desk", category: "Дом", category_en: "Home" },
+            { text: "Сделать уроки", text_en: "Do homework", category: "Дом", category_en: "Home" },
+            { text: "Почитать книгу", text_en: "Read a book", category: "Дом", category_en: "Home" },
+            { text: "Приготовить ужин", text_en: "Cook dinner", category: "Дом", category_en: "Home" },
+            { text: "Сделать перестановку", text_en: "Rearrange furniture", category: "Дом", category_en: "Home" },
+            { text: "Помыть посуду", text_en: "Wash the dishes", category: "Дом", category_en: "Home" },
+            { text: "Полить домашние цветы", text_en: "Water the houseplants", category: "Дом", category_en: "Home" },
+            { text: "Разобрать старые вещи в шкафу", text_en: "Sort out old clothes in the closet", category: "Дом", category_en: "Home" },
+            { text: "Посмотреть документальный фильм", text_en: "Watch a documentary", category: "Дом", category_en: "Home" },
+            { text: "Сделать зарядку или растяжку", text_en: "Do some exercises or stretching", category: "Дом", category_en: "Home" },
+            { text: "Постирать одежду", text_en: "Do the laundry", category: "Дом", category_en: "Home" },
+            { text: "Пропылесосить в комнате", text_en: "Vacuum the room", category: "Дом", category_en: "Home" },
+            { text: "Нарисовать рисунок в блокноте", text_en: "Draw a sketch in a notebook", category: "Дом", category_en: "Home" },
+            { text: "Приготовить новое необычное блюдо", text_en: "Cook a new unusual dish", category: "Дом", category_en: "Home" },
+            { text: "Послушать подкаст на интересную тему", text_en: "Listen to an interesting podcast", category: "Дом", category_en: "Home" },
             
-            { text: "Сходить за хлебом", category: "Город" },
-            { text: "Сходить в кино", category: "Город" },
-            { text: "Посетить музей", category: "Город" },
-            { text: "Погулять в парке", category: "Город" },
-            { text: "Сходить в кафе", category: "Город" },
-            { text: "Посетить торговый центр", category: "Город" },
-            { text: "Сходить на выставку современного искусства", category: "Город" },
-            { text: "Покататься на общественном транспорте по новому маршруту", category: "Город" },
-            { text: "Зайти в местный книжный магазин", category: "Город" },
-            { text: "Найти новые граффити на улицах города", category: "Город" },
-            { text: "Сходить в развлекательный центр или боулинг", category: "Город" },
-            { text: "Сделать красивые фотографии городских зданий", category: "Город" },
-            { text: "Посетить городскую библиотеку", category: "Город" },
-            { text: "Зайти в магазин старых виниловых пластинок или комиксов", category: "Город" },
-            { text: "Найти скрытую смотровую площадку города", category: "Город" },
+            { text: "Сходить за хлебом", text_en: "Go buy some bread", category: "Город", category_en: "City" },
+            { text: "Сходить в кино", text_en: "Go to the cinema", category: "Город", category_en: "City" },
+            { text: "Посетить музей", text_en: "Visit a museum", category: "Город", category_en: "City" },
+            { text: "Погулять в парке", text_en: "Take a walk in the park", category: "Город", category_en: "City" },
+            { text: "Сходить в кафе", text_en: "Go to a cafe", category: "Город", category_en: "City" },
+            { text: "Посетить торговый центр", text_en: "Visit a shopping mall", category: "Город", category_en: "City" },
+            { text: "Сходить на выставку современного искусства", text_en: "Go to a modern art exhibition", category: "Город", category_en: "City" },
+            { text: "Покататься на общественном транспорте", text_en: "Take a ride on public transport", category: "Город", category_en: "City" },
+            { text: "Зайти в местный книжный магазин", text_en: "Visit a local bookstore", category: "Город", category_en: "City" },
+            { text: "Найти новые граффити на улицах", text_en: "Find new street graffiti", category: "Город", category_en: "City" },
+            { text: "Сходить в боулинг", text_en: "Go bowling", category: "Город", category_en: "City" },
+            { text: "Сделать фотографии городских зданий", text_en: "Take photos of city buildings", category: "Город", category_en: "City" },
+            { text: "Посетить городскую библиотеку", text_en: "Visit the city library", category: "Город", category_en: "City" },
+            { text: "Зайти в магазин старых пластинок", text_en: "Visit a vintage record store", category: "Город", category_en: "City" },
+            { text: "Найти смотровую площадку города", text_en: "Find a city viewpoint", category: "Город", category_en: "City" },
             
-            { text: "Покататься на велике", category: "Улица" },
-            { text: "Поиграть в футбол", category: "Улица" },
-            { text: "Сделать пробежку", category: "Улица" },
-            { text: "Покормить птиц", category: "Улица" },
-            { text: "Пройтись пешком", category: "Улица" },
-            { text: "Покататься на самокате или скейтборде", category: "Улица" },
-            { text: "Поиграть в баскетбол на уличной площадке", category: "Улица" },
-            { text: "Прыгать на скакалке", category: "Улица" },
-            { text: "Встретиться со старыми друзьями во дворе", category: "Улица" },
-            { text: "Устроить небольшой пикник на траве", category: "Улица" },
-            { text: "Пройти пешком десять тысяч шагов", category: "Улица" },
-            { text: "Послушать музыку, гуляя по вечерней улице", category: "Улица" },
-            { text: "Понаблюдать за облаками на лавочке", category: "Улица" },
-            { text: "Изучить новые улочки в своем районе", category: "Улица" },
-            { text: "Собрать гербарий из красивых опавших листьев", category: "Улица" }
+            { text: "Покататься на велике", text_en: "Ride a bike", category: "Улица", category_en: "Street" },
+            { text: "Поиграть в футбол", text_en: "Play football", category: "Улица", category_en: "Street" },
+            { text: "Сделать пробежку", text_en: "Go for a run", category: "Улица", category_en: "Street" },
+            { text: "Покормить птиц", text_en: "Feed the birds", category: "Улица", category_en: "Street" },
+            { text: "Пройтись пешком", text_en: "Take a walk", category: "Улица", category_en: "Street" },
+            { text: "Покататься на самокате", text_en: "Ride a scooter", category: "Улица", category_en: "Street" },
+            { text: "Поиграть в баскетбол", text_en: "Play street basketball", category: "Улица", category_en: "Street" },
+            { text: "Прыгать на скакалке", text_en: "Jump rope", category: "Улица", category_en: "Street" },
+            { text: "Встретиться с друзьями во дворе", text_en: "Meet friends outside", category: "Улица", category_en: "Street" },
+            { text: "Устроить пикник на траве", text_en: "Have a picnic on the grass", category: "Улица", category_en: "Street" },
+            { text: "Пройти десять тысяч шагов", text_en: "Walk ten thousand steps", category: "Улица", category_en: "Street" },
+            { text: "Послушать музыку, гуляя вечером", text_en: "Listen to music while walking at night", category: "Улица", category_en: "Street" },
+            { text: "Понаблюдать за облаками", text_en: "Watch the clouds from a bench", category: "Улица", category_en: "Street" },
+            { text: "Изучить новые улочки района", text_en: "Explore new neighborhood streets", category: "Улица", category_en: "Street" },
+            { text: "Собрать красивые листья", text_en: "Collect beautiful autumn leaves", category: "Улица", category_en: "Street" }
         ];
 
         const exclusiveRandomIdeas = [
-            { text: "Изучить 10 новых тегов в HTML", category: "Саморазвитие" },
-            { text: "Нарисовать собственное граффити на бумаге", category: "Творчество" },
-            { text: "Сделать бумажный самолетик новой сложной формы", category: "Хобби" },
-            { text: "Послушать новый музыкальный альбом от начала до конца", category: "Отдых" },
-            { text: "Придумать сюжет для собственной мини-игры", category: "Творчество" },
-            { text: "Выучить 5 фраз на редком иностранном языке", category: "Саморазвитие" },
-            { text: "Попробовать написать код без единой ошибки с первого раза", category: "Испытание" },
-            { text: "Устроить фотосессию необычных объектов в комнате", category: "Хобби" },
-            { text: "Придумать шифр и написать им записку", category: "Квесты" },
-            { text: "Построить самую высокую башню из подручных предметов", category: "Развлечение" },
-            { text: "Написать короткий рассказ из ровно ста слов", category: "Творчество" },
-            { text: "Освоить три простых фокуса с картами или монетами", category: "Развлечение" },
-            { text: "Попробовать медитировать в полной тишине десять минут", category: "Саморазвитие" },
-            { text: "Узнать историю происхождения своего города или фамилии", category: "Саморазвитие" },
-            { text: "Сделать коллаж из старых ненужных журналов или газет", category: "Творчество" },
-            { text: "Провести целый час без единого электронного гаджета", category: "Испытание" },
-            { text: "Сделать оригами в виде журавлика или лягушки", category: "Хобби" },
-            { text: "Написать письмо самому себе в будущее на один год вперед", category: "Саморазвитие" },
-            { text: "Выучить наизусть небольшое стихотворение", category: "Саморазвитие" },
-            { text: "Придумать логотип для вымышленного бренда одежды", category: "Творчество" }
+            { text: "Изучить 10 новых тегов в HTML", text_en: "Learn 10 new HTML tags", category: "Саморазвитие", category_en: "Self-dev" },
+            { text: "Нарисовать собственное граффити на бумаге", text_en: "Draw your own graffiti on paper", category: "Творчество", category_en: "Creative" },
+            { text: "Сделать бумажный самолетик сложной формы", text_en: "Make a complex paper airplane", category: "Хобби", category_en: "Hobby" },
+            { text: "Послушать новый альбом от начала до конца", text_en: "Listen to a new album start to finish", category: "Отдых", category_en: "Relax" },
+            { text: "Придумать сюжет для своей мини-игры", text_en: "Invent a plot for your own mini-game", category: "Творчество", category_en: "Creative" },
+            { text: "Выучить 5 фраз на редком языке", text_en: "Learn 5 phrases in a rare language", category: "Саморазвитие", category_en: "Self-dev" },
+            { text: "Попробовать написать код без единой ошибки", text_en: "Try to write code without a single error", category: "Испытание", category_en: "Challenge" },
+            { text: "Устроить фотосессию объектов в комнате", text_en: "Do a photo shoot of objects in your room", category: "Хобби", category_en: "Hobby" },
+            { text: "Придумать шифр и написать им записку", text_en: "Invent a cipher and write a note with it", category: "Квесты", category_en: "Quests" },
+            { text: "Построить башню из подручных предметов", text_en: "Build a tower from random objects", category: "Развлечение", category_en: "Fun" },
+            { text: "Написать рассказ из ровно ста слов", text_en: "Write a story of exactly 100 words", category: "Творчество", category_en: "Creative" },
+            { text: "Освоить три простых фокуса", text_en: "Learn three simple magic tricks", category: "Развлечение", category_en: "Fun" },
+            { text: "Попробовать медитировать десять минут", text_en: "Try meditating for ten minutes", category: "Саморазвитие", category_en: "Self-dev" },
+            { text: "Узнать историю своей фамилии", text_en: "Find out the history of your surname", category: "Саморазвитие", category_en: "Self-dev" },
+            { text: "Сделать коллаж из старых журналов", text_en: "Make a collage from old magazines", category: "Творчество", category_en: "Creative" },
+            { text: "Провести час без единого гаджета", text_en: "Spend an hour without any gadgets", category: "Испытание", category_en: "Challenge" },
+            { text: "Сделать оригами в виде журавлика", text_en: "Make an origami paper crane", category: "Хобби", category_en: "Hobby" },
+            { text: "Написать письмо себе в будущее", text_en: "Write a letter to your future self", category: "Саморазвитие", category_en: "Self-dev" },
+            { text: "Выучить наизусть стихотворение", text_en: "Learn a short poem by heart", category: "Саморазвитие", category_en: "Self-dev" },
+            { text: "Придумать логотип для бренда", text_en: "Design a logo for a fictional brand", category: "Творчество", category_en: "Creative" }
         ];
 
         let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+        function updateUI() {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    if (el.tagName === 'INPUT') {
+                        el.placeholder = translations[currentLang][key];
+                    } else {
+                        el.innerHTML = translations[currentLang][key];
+                    }
+                }
+            });
+            updateRandomBtnState();
+            
+            const savedIdeas = JSON.parse(localStorage.getItem('savedIdeas')) || [];
+            if(savedIdeas.length > 0) renderIdeas(savedIdeas);
+            
+            if (document.getElementById('fav-overlay').classList.contains('active')) {
+                renderFavoritesList();
+            }
+            if (document.getElementById('category-overlay').classList.contains('active')) {
+                updateCategoryModalView();
+            }
+        }
+
+        const langSelect = document.getElementById("lang-select");
+        langSelect.value = currentLang;
+        langSelect.addEventListener("change", (e) => {
+            currentLang = e.target.value;
+            localStorage.setItem('appLang', currentLang);
+            updateUI();
+        });
 
         function saveFavorites() {
             localStorage.setItem('favorites', JSON.stringify(favorites));
@@ -567,7 +660,9 @@
             div.className = "idea-item";
             
             const spanText = document.createElement("span");
-            spanText.innerText = `${item.text.toUpperCase()} (${item.category.toUpperCase()})`;
+            const displayText = currentLang === 'ru' ? item.text : (item.text_en || item.text);
+            const displayCat = currentLang === 'ru' ? item.category : (item.category_en || item.category);
+            spanText.innerText = `${displayText.toUpperCase()} (${displayCat.toUpperCase()})`;
             
             const heart = document.createElementNS("http://www.w3.org/2000/svg", "svg");
             heart.setAttribute("viewBox", "0 0 24 24");
@@ -600,7 +695,7 @@
             const favList = document.getElementById("fav-ideas-list");
             favList.innerHTML = "";
             if (favorites.length === 0) {
-                favList.innerHTML = "<div class='idea-item'>Здесь пока ничего нет. Нажимайте на ❤ у любых идей!</div>";
+                favList.innerHTML = `<div class='idea-item'>${translations[currentLang]["empty-fav"]}</div>`;
                 return;
             }
             favorites.forEach(item => {
@@ -608,26 +703,26 @@
             });
         }
 
+        let activeCategoryTile = "";
+
         function updateCategoryModalView() {
-            const title = document.getElementById('category-modal-title').innerText;
             const catList = document.getElementById('category-ideas-list');
             catList.innerHTML = "";
             
-            if (title === "СКОРО..") {
-                catList.innerHTML = "<div class='idea-item'>Эта категория скоро появится!</div>";
+            if (activeCategoryTile === "Скоро") {
+                catList.innerHTML = `<div class='idea-item'>${translations[currentLang]["empty-cat"]}</div>`;
                 return;
             }
             
             const savedCatIdeas = JSON.parse(localStorage.getItem('savedCatIdeas')) || {};
-            const properCaseCat = title.charAt(0).toUpperCase() + title.slice(1).toLowerCase();
-            const ideasToShow = savedCatIdeas[properCaseCat] || [];
+            const ideasToShow = savedCatIdeas[activeCategoryTile] || [];
             
             if (ideasToShow.length > 0) {
                 ideasToShow.forEach(item => {
                     catList.appendChild(createIdeaElement(item));
                 });
             } else {
-                catList.innerHTML = "<div class='idea-item'>Нет доступных идей</div>";
+                catList.innerHTML = `<div class='idea-item'>${translations[currentLang]["no-ideas"]}</div>`;
             }
         }
 
@@ -647,7 +742,7 @@
             const categories = ["Дом", "Город", "Улица", "Игры"];
             let catIdeas = {};
             categories.forEach(cat => {
-                let filtered = ideas.filter(i => i.category.toLowerCase() === cat.toLowerCase());
+                let filtered = ideas.filter(i => i.category === cat);
                 let selected = [];
                 for(let i = 0; i < 3; i++) {
                     if (filtered.length === 0) break;
@@ -737,8 +832,17 @@
 
         catTiles.forEach(tile => {
             tile.addEventListener('click', () => {
-                const title = tile.querySelector('h2').innerText;
-                catTitle.innerText = title;
+                activeCategoryTile = tile.getAttribute('data-cat');
+                
+                let titleKey = "";
+                if(activeCategoryTile === "Дом") titleKey = "cat-home";
+                else if(activeCategoryTile === "Город") titleKey = "cat-city";
+                else if(activeCategoryTile === "Улица") titleKey = "cat-street";
+                else if(activeCategoryTile === "Игры") titleKey = "cat-games";
+                else titleKey = "cat-soon1";
+
+                catTitle.innerText = translations[currentLang][titleKey];
+                
                 updateCategoryModalView();
                 catOverlay.classList.add('active');
             });
@@ -759,18 +863,22 @@
                 return;
             }
 
-            const matched = ideas.filter(i => i.text.toLowerCase().includes(val));
+            const matched = ideas.filter(i => {
+                const textToSearch = currentLang === 'ru' ? i.text.toLowerCase() : (i.text_en || "").toLowerCase();
+                return textToSearch.includes(val);
+            });
             
             if (matched.length === 0) {
-                searchResults.innerHTML = "<div class='search-item'>Ничего не найдено</div>";
+                searchResults.innerHTML = `<div class='search-item'>${translations[currentLang]["no-found"]}</div>`;
                 searchResults.classList.add("active");
                 return;
             }
 
             const grouped = {};
             matched.forEach(i => {
-                if (!grouped[i.category]) grouped[i.category] = [];
-                grouped[i.category].push(i);
+                const catName = currentLang === 'ru' ? i.category : i.category_en;
+                if (!grouped[catName]) grouped[catName] = [];
+                grouped[catName].push(i);
             });
 
             for (const cat in grouped) {
@@ -782,9 +890,9 @@
                 grouped[cat].forEach(item => {
                     const div = document.createElement("div");
                     div.className = "search-item";
-                    div.innerText = item.text;
+                    div.innerText = currentLang === 'ru' ? item.text : item.text_en;
                     div.addEventListener("click", () => {
-                        catTitle.innerText = item.category.toUpperCase();
+                        catTitle.innerText = (currentLang === 'ru' ? item.category : item.category_en).toUpperCase();
                         const catList = document.getElementById('category-ideas-list');
                         catList.innerHTML = "";
                         catList.appendChild(createIdeaElement(item));
@@ -805,6 +913,7 @@
         });
 
         const randomBtn = document.getElementById("random-btn");
+        const randomBtnText = document.getElementById("random-btn-text");
         const toast = document.getElementById("toast");
 
         function updateRandomBtnState() {
@@ -812,10 +921,10 @@
             const now = new Date().getTime();
             if (last && (now - last < 3600000)) {
                 randomBtn.classList.add("locked");
-                randomBtn.innerHTML = "🔒 Случайная идея";
+                randomBtnText.innerText = translations[currentLang]["btn-random-locked"];
             } else {
                 randomBtn.classList.remove("locked");
-                randomBtn.innerHTML = "⚡ Случайная идея";
+                randomBtnText.innerText = translations[currentLang]["btn-random"];
             }
         }
 
@@ -828,7 +937,7 @@
             } else {
                 const randIdea = exclusiveRandomIdeas[Math.floor(Math.random() * exclusiveRandomIdeas.length)];
                 
-                catTitle.innerText = "СЛУЧАЙНАЯ ИДЕЯ";
+                catTitle.innerText = translations[currentLang]["cat-modal-rand"];
                 const catList = document.getElementById('category-ideas-list');
                 catList.innerHTML = "";
                 catList.appendChild(createIdeaElement(randIdea));
@@ -839,6 +948,7 @@
             }
         });
 
+        updateUI();
         updateRandomBtnState();
         checkAndUpdate();
         setInterval(checkAndUpdate, 60000);
