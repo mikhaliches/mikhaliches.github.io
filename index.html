@@ -1,9 +1,24 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>FINDIdea</title>
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109454353', 'ym');
+
+        ym(109454353, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/109454353" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
     
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FINDIdea</title>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;700&display=swap');
 
@@ -58,27 +73,37 @@
             background-position: bottom center;
         }
 
-        .header { display: flex; justify-content: space-between; align-items: center; transition: color 0.5s ease; }
+        .header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            transition: color 0.5s ease; 
+            flex-wrap: wrap;
+            gap: 15px;
+        }
         .logo-block { display: flex; align-items: center; }
         .logo { width: 80px; }
-        .nav-menu { display: flex; list-style: none; gap: 20px; align-items: center; }
+        .nav-menu { display: flex; list-style: none; gap: 20px; align-items: center; margin: 0; padding: 0; }
         .link { text-decoration: none; color: var(--text-color); cursor: pointer; transition: color 0.5s ease; display: flex; align-items: center; gap: 5px; }
 
-        .container { display: grid; grid-template-columns: 250px 1fr; gap: 40px; }
+        .container { 
+            display: grid; 
+            grid-template-columns: 250px 1fr; 
+            gap: 40px; 
+            margin-top: 30px;
+        }
 
         .sidebar {
             display: flex;
             flex-direction: column;
             gap: 20px;
-            position: relative;
-            top: 50px;
         }
 
         .new-ideas-section { 
             background: var(--block-bg); 
             padding: 20px; 
             border-radius: 10px; 
-            width: 250px; 
+            width: 100%; 
             height: 280px; 
             display: flex; 
             flex-direction: column; 
@@ -105,7 +130,7 @@
             background: var(--block-bg); 
             padding: 20px; 
             border-radius: 10px;
-            width: 250px; 
+            width: 100%; 
             min-height: 140px;
             box-sizing: border-box; 
             cursor: pointer;
@@ -114,26 +139,51 @@
         .updates-section:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .update-date { font-size: 0.85rem; color: var(--text-color); opacity: 0.7; margin-top: 8px; font-weight: 400; transition: color 0.5s ease; }
 
-        .title-block { margin-top: 50px; text-align: right; margin-right: 20px; margin-left: auto; width: 640px; }
+        .title-block { 
+            text-align: right; 
+            width: 100%; 
+            max-width: 640px;
+            margin-left: auto;
+        }
         
-        .search-container { position: relative; margin-top: 20px; display: flex; flex-direction: column; align-items: flex-end; }
+        .title-block h1 {
+            font-size: 2.5rem;
+            margin: 10px 0;
+        }
+
+        .title-block h2 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .search-container { 
+            position: relative; 
+            margin-top: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: flex-end; 
+            width: 100%;
+        }
         
         .input-box { 
             padding: 15px; 
-            width: 610px; 
+            width: 100%; 
+            max-width: 610px;
             border: 1px solid var(--input-border); 
             background: var(--bg-color);
             color: var(--text-color);
             outline: none; 
             font-size: 1.2rem; 
             transition: background-color 0.8s ease, color 0.5s ease, border-color 0.5s ease;
+            box-sizing: border-box;
         }
 
         .search-results {
             position: absolute;
             top: 55px;
             right: 0;
-            width: 642px;
+            width: 100%;
+            max-width: 610px;
             background: var(--card-bg);
             border: 1px solid var(--input-border);
             border-top: none;
@@ -170,8 +220,13 @@
         .random-btn.locked { opacity: 0.5; cursor: not-allowed; }
 
         .categories {
-            display: grid; grid-template-columns: repeat(3, 200px); gap: 20px; margin-top: 40px;
-            margin-right: 20px; margin-left: auto; justify-content: end;
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 20px; 
+            margin-top: 40px;
+            width: 100%;
+            max-width: 640px;
+            margin-left: auto;
         }
         .cat-item { 
             background-color: var(--cat-bg); 
@@ -179,12 +234,17 @@
             text-align: center; 
             transition: background-color 0.8s ease, transform 0.2s ease, box-shadow 0.2s ease;
             cursor: pointer;
+            border-radius: 8px;
         }
         .cat-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        .cat-item img { width: 60px; pointer-events: none; }
+        .cat-item h2 {
+            font-size: 1.2rem;
+            margin: 0 0 10px 0;
+        }
+        .cat-item img { width: 60px; pointer-events: none; height: auto; }
 
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -193,19 +253,25 @@
             opacity: 0; pointer-events: none; 
             transition: opacity 0.3s ease; 
             z-index: 1000;
+            padding: 20px;
+            box-sizing: border-box;
         }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
         
         .modal-window { 
             background: var(--modal-bg); 
             color: var(--modal-text);
-            padding: 40px; 
+            padding: 30px; 
             border-radius: 12px; 
-            width: 500px; 
+            width: 100%;
+            max-width: 500px; 
             position: relative; 
             transition: background-color 0.5s ease, color 0.5s ease;
+            box-sizing: border-box;
+            max-height: 90vh;
+            overflow-y: auto;
         }
-        .modal-close { position: absolute; top: 20px; right: 25px; font-size: 2rem; cursor: pointer; color: var(--modal-text); }
+        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 2rem; cursor: pointer; color: var(--modal-text); line-height: 1; }
 
         .settings-row {
             display: flex;
@@ -264,8 +330,65 @@
             transition: top 0.4s ease;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             pointer-events: none;
+            width: max-content;
+            max-width: 90%;
+            text-align: center;
+            box-sizing: border-box;
         }
         .toast.show { top: 30px; }
+
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .sidebar {
+                order: 2;
+            }
+            main {
+                order: 1;
+            }
+            .title-block {
+                text-align: center;
+                margin-right: auto;
+            }
+            .search-container {
+                align-items: center;
+            }
+            .categories {
+                margin-right: auto;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+            .header {
+                justify-content: center;
+                text-align: center;
+            }
+            .title-block h1 {
+                font-size: 2rem;
+            }
+            .title-block h2 {
+                font-size: 1.2rem;
+            }
+            .categories {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            .input-box {
+                font-size: 1rem;
+                padding: 12px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .categories {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -326,7 +449,7 @@
             <span class="modal-close" id="modal-close">&times;</span>
             <h2>Полный список обновлений v1.3</h2>
             <p>Дата релиза: 27 мая 2026 года, 16:15</p>
-            <ul style="line-height: 1.8;">
+            <ul style="line-height: 1.8; padding-left: 20px;">
                 <li>Добавлен интеллектуальный поиск с выводом категорий над результатами.</li>
                 <li>Внедрена кнопка «Случайная идея» с ограничением использования 1 раз в час.</li>
                 <li>Реализована система всплывающих уведомлений.</li>
@@ -644,6 +767,7 @@
         checkAndUpdate();
         setInterval(checkAndUpdate, 60000);
         setInterval(updateRandomBtnState, 60000);
+        
     </script>
 </body>
 </html>
