@@ -37,6 +37,7 @@
             --slider-knob: #ffffff;
             --toast-bg: #000000;
             --toast-text: #ffffff;
+            --heart-filter: drop-shadow(0px 0px 1px #000);
         }
 
         [data-theme="dark"] {
@@ -54,6 +55,7 @@
             --slider-knob: #ffffff;
             --toast-bg: #ffffff;
             --toast-text: #000000;
+            --heart-filter: drop-shadow(0px 0px 1px #fff);
         }
 
         body { 
@@ -63,7 +65,6 @@
             font-weight: 700;
             background-color: var(--bg-color);
             color: var(--text-color);
-            background-image: linear-gradient(to bottom, var(--bg-color) 0%, var(--bg-color) 100%);
             background-size: 100% 200%;
             background-position: top center;
             transition: background-position 0.8s ease, background-color 0.8s ease, color 0.5s ease;
@@ -124,6 +125,29 @@
             background: var(--card-bg); 
             border-left: 5px solid var(--text-color);
             transition: background-color 0.8s ease, color 0.5s ease, border-color 0.5s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .heart-btn {
+            cursor: pointer;
+            font-size: 1.2rem;
+            user-select: none;
+            transition: transform 0.2s ease;
+            display: inline-block;
+        }
+        .heart-btn:hover { transform: scale(1.2); }
+        .heart-btn.unliked {
+            color: transparent;
+            -webkit-text-stroke: 2px var(--text-color);
+            filter: var(--heart-filter);
+        }
+        .heart-btn.liked {
+            color: #ff3b30;
+            -webkit-text-stroke: 0px transparent;
+            filter: none;
         }
         
         .updates-section {
@@ -338,56 +362,25 @@
         .toast.show { top: 30px; }
 
         @media (max-width: 900px) {
-            .container {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            .sidebar {
-                order: 2;
-            }
-            main {
-                order: 1;
-            }
-            .title-block {
-                text-align: center;
-                margin-right: auto;
-            }
-            .search-container {
-                align-items: center;
-            }
-            .categories {
-                margin-right: auto;
-            }
+            .container { grid-template-columns: 1fr; gap: 30px; }
+            .sidebar { order: 2; }
+            main { order: 1; }
+            .title-block { text-align: center; margin-right: auto; }
+            .search-container { align-items: center; }
+            .categories { margin-right: auto; }
         }
 
         @media (max-width: 600px) {
-            body {
-                padding: 15px;
-            }
-            .header {
-                justify-content: center;
-                text-align: center;
-            }
-            .title-block h1 {
-                font-size: 2rem;
-            }
-            .title-block h2 {
-                font-size: 1.2rem;
-            }
-            .categories {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-            .input-box {
-                font-size: 1rem;
-                padding: 12px;
-            }
+            body { padding: 15px; }
+            .header { justify-content: center; text-align: center; }
+            .title-block h1 { font-size: 2rem; }
+            .title-block h2 { font-size: 1.2rem; }
+            .categories { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .input-box { font-size: 1rem; padding: 12px; }
         }
 
         @media (max-width: 400px) {
-            .categories {
-                grid-template-columns: 1fr;
-            }
+            .categories { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -403,6 +396,7 @@
         <nav>
             <ul class="nav-menu">
                 <li><a class="link" id="new-trigger">Новое</a></li>
+                <li><a class="link" id="fav-trigger">❤️ Избранное</a></li>
                 <li><a class="link" id="settings-trigger">⚙️ Настройки</a></li>
             </ul>
         </nav>
@@ -416,9 +410,9 @@
             </aside>
 
             <aside class="updates-section" id="update-trigger">
-                <h2>Обновление v1.3</h2>
+                <h2>Обновление v1.4</h2>
                 <div class="update-date">Дата выхода: 27.05.2026</div>
-                <div class="update-date">Время: 16:15</div>
+                <div class="update-date">Время: 19:40</div>
             </aside>
         </div>
 
@@ -444,20 +438,22 @@
         </main>
     </div>
 
+    <!-- Модалка обновлений -->
     <div class="modal-overlay" id="modal-overlay">
         <div class="modal-window">
             <span class="modal-close" id="modal-close">&times;</span>
-            <h2>Полный список обновлений v1.3</h2>
-            <p>Дата релиза: 27 мая 2026 года, 16:15</p>
+            <h2>Полный список обновлений v1.4</h2>
+            <p>Дата релиза: 27 мая 2026 года, 19:40</p>
             <ul style="line-height: 1.8; padding-left: 20px;">
-                <li>Добавлен интеллектуальный поиск с выводом категорий над результатами.</li>
-                <li>Внедрена кнопка «Случайная идея» с ограничением использования 1 раз в час.</li>
-                <li>Реализована система всплывающих уведомлений.</li>
-                <li>Полностью оптимизирован код.</li>
+                <li><strong>Интеграция Избранного:</strong> Теперь у каждого элемента есть кнопка-сердечко для сохранения любимых идей.</li>
+                <li><strong>Вкладка «Избранное»:</strong> Быстрый доступ ко всем лайкнутым идеям прямо из шапки сайта.</li>
+                <li><strong>Сохранение данных:</strong> Все выбранные идеи автоматически записываются в кэш браузера и не пропадают при перезапуске страницы.</li>
+                <li>Улучшена общая адаптивность скриптов.</li>
             </ul>
         </div>
     </div>
 
+    <!-- Модалка настроек -->
     <div class="modal-overlay" id="settings-overlay">
         <div class="modal-window">
             <span class="modal-close" id="settings-close">&times;</span>
@@ -472,11 +468,21 @@
         </div>
     </div>
 
+    <!-- Модалка категорий -->
     <div class="modal-overlay" id="category-overlay">
         <div class="modal-window">
             <span class="modal-close" id="category-close">&times;</span>
             <h2 id="category-modal-title">Категория</h2>
             <div id="category-ideas-list" style="margin-top: 20px;"></div>
+        </div>
+    </div>
+
+    <!-- Новая модалка ИЗБРАННОГО -->
+    <div class="modal-overlay" id="fav-overlay">
+        <div class="modal-window">
+            <span class="modal-close" id="fav-close">&times;</span>
+            <h2>❤️ Избранные идеи</h2>
+            <div id="fav-ideas-list" style="margin-top: 20px; max-height: 60vh; overflow-y: auto;"></div>
         </div>
     </div>
 
@@ -517,15 +523,98 @@
             { text: "Построить самую высокую башню из подручных предметов", category: "Развлечение" }
         ];
 
+        // Получение избранного из localStorage
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+        function saveFavorites() {
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+        }
+
+        function toggleFav(item, heartElement) {
+            const index = favorites.findIndex(f => f.text === item.text);
+            if (index > -1) {
+                favorites.splice(index, 1);
+                heartElement.className = "heart-btn unliked";
+            } else {
+                favorites.push(item);
+                heartElement.className = "heart-btn liked";
+            }
+            saveFavorites();
+            
+            // Динамически обновляем видимые списки, чтобы лайки синхронизировались
+            const savedIdeas = JSON.parse(localStorage.getItem('savedIdeas')) || [];
+            renderIdeas(savedIdeas);
+            
+            if (document.getElementById('category-overlay').classList.contains('active')) {
+                updateCategoryModalView();
+            }
+            if (document.getElementById('fav-overlay').classList.contains('active')) {
+                renderFavoritesList();
+            }
+        }
+
+        function createIdeaElement(item) {
+            const div = document.createElement("div");
+            div.className = "idea-item";
+            
+            const spanText = document.createElement("span");
+            spanText.innerText = `${item.text.toUpperCase()} (${item.category.toUpperCase()})`;
+            
+            const heart = document.createElement("span");
+            const isLiked = favorites.some(f => f.text === item.text);
+            heart.className = isLiked ? "heart-btn liked" : "heart-btn unliked";
+            heart.innerText = "❤";
+            heart.addEventListener("click", (e) => {
+                e.stopPropagation();
+                toggleFav(item, heart);
+            });
+            
+            div.appendChild(spanText);
+            div.appendChild(heart);
+            return div;
+        }
+
         function renderIdeas(items) {
             const list = document.getElementById("ideas-list");
             list.innerHTML = "";
             items.forEach(item => {
-                const div = document.createElement("div");
-                div.className = "idea-item";
-                div.innerText = `${item.text.toUpperCase()} (${item.category})`;
-                list.appendChild(div);
+                list.appendChild(createIdeaElement(item));
             });
+        }
+
+        function renderFavoritesList() {
+            const favList = document.getElementById("fav-ideas-list");
+            favList.innerHTML = "";
+            if (favorites.length === 0) {
+                favList.innerHTML = "<div class='idea-item'>Здесь пока ничего нет. Добавляйте идеи с помощью ❤!</div>";
+                return;
+            }
+            favorites.forEach(item => {
+                favList.appendChild(createIdeaElement(item));
+            });
+        }
+
+        function updateCategoryModalView() {
+            const title = document.getElementById('category-modal-title').innerText;
+            const catList = document.getElementById('category-ideas-list');
+            catList.innerHTML = "";
+            
+            if (title === "СКОРО..") {
+                catList.innerHTML = "<div class='idea-item'>Эта категория скоро появится!</div>";
+                return;
+            }
+            
+            const savedCatIdeas = JSON.parse(localStorage.getItem('savedCatIdeas')) || {};
+            const properCaseCat = title.charAt(0).toUpperCase() + title.slice(1).toLowerCase();
+            const ideasToShow = savedCatIdeas[properCaseCat] || [];
+            
+            if (ideasToShow.length > 0) {
+                ideasToShow.forEach(item => {
+                    catList.appendChild(createIdeaElement(item));
+                });
+            } else {
+                catList.innerHTML = "<div class='idea-item'>Нет доступных идей</div>";
+            }
         }
 
         function generateNewIdeas() {
@@ -583,6 +672,7 @@
             }
         }
 
+        // Логика подсветки Нового
         document.getElementById("new-trigger").addEventListener("click", (e) => {
             e.preventDefault();
             const box = document.getElementById("ideas-box");
@@ -590,75 +680,58 @@
             setTimeout(() => box.classList.remove("highlight"), 1000);
         });
 
+        // Модалка обновлений
         const overlay = document.getElementById("modal-overlay");
         document.getElementById("update-trigger").addEventListener("click", () => overlay.classList.add("active"));
         document.getElementById("modal-close").addEventListener("click", () => overlay.classList.remove("active"));
         overlay.addEventListener("click", (e) => { if(e.target === overlay) overlay.classList.remove("active"); });
 
+        // Модалка настроек
         const settingsOverlay = document.getElementById("settings-overlay");
         document.getElementById("settings-trigger").addEventListener("click", () => settingsOverlay.classList.add("active"));
         document.getElementById("settings-close").addEventListener("click", () => settingsOverlay.classList.remove("active"));
         settingsOverlay.addEventListener("click", (e) => { if(e.target === settingsOverlay) settingsOverlay.classList.remove("active"); });
 
+        // Модалка Избранного
+        const favOverlay = document.getElementById("fav-overlay");
+        document.getElementById("fav-trigger").addEventListener("click", () => {
+            renderFavoritesList();
+            favOverlay.classList.add("active");
+        });
+        document.getElementById("fav-close").addEventListener("click", () => favOverlay.classList.remove("active"));
+        favOverlay.addEventListener("click", (e) => { if(e.target === favOverlay) favOverlay.classList.remove("active"); });
+
+        // Переключатель темы
         const themeToggle = document.getElementById("theme-toggle");
-        
         function setTheme(theme) {
             document.body.classList.add('theme-changing');
             document.documentElement.setAttribute('data-theme', theme);
             localStorage.setItem('theme', theme);
-            
-            setTimeout(() => {
-                document.body.classList.remove('theme-changing');
-            }, 800);
+            setTimeout(() => { document.body.classList.remove('theme-changing'); }, 800);
         }
 
         themeToggle.addEventListener("change", (e) => {
-            if (e.target.checked) {
-                setTheme('dark');
-            } else {
-                setTheme('light');
-            }
+            if (e.target.checked) setTheme('dark');
+            else setTheme('light');
         });
 
         const savedTheme = localStorage.getItem('theme') || 'light';
         if (savedTheme === 'dark') {
             themeToggle.checked = true;
             document.documentElement.setAttribute('data-theme', 'dark');
-        } else {
-            themeToggle.checked = false;
-            document.documentElement.setAttribute('data-theme', 'light');
         }
 
+        // Категории
         const catTiles = document.querySelectorAll('.cat-item');
         const catOverlay = document.getElementById('category-overlay');
         const catTitle = document.getElementById('category-modal-title');
-        const catList = document.getElementById('category-ideas-list');
         const catClose = document.getElementById('category-close');
 
         catTiles.forEach(tile => {
             tile.addEventListener('click', () => {
                 const title = tile.querySelector('h2').innerText;
                 catTitle.innerText = title;
-                catList.innerHTML = "";
-                
-                if (title === "СКОРО..") {
-                    catList.innerHTML = "<div class='idea-item'>Эта категория скоро появится!</div>";
-                } else {
-                    const savedCatIdeas = JSON.parse(localStorage.getItem('savedCatIdeas')) || {};
-                    const properCaseCat = title.charAt(0).toUpperCase() + title.slice(1).toLowerCase();
-                    const ideasToShow = savedCatIdeas[properCaseCat] || [];
-                    
-                    if (ideasToShow.length > 0) {
-                        ideasToShow.forEach(item => {
-                            const div = document.createElement("div");
-                            div.className = "idea-item";
-                            div.innerText = item.text.toUpperCase();
-                            catList.appendChild(div);
-                        });
-                    } else {
-                        catList.innerHTML = "<div class='idea-item'>Нет доступных идей</div>";
-                    }
-                }
+                updateCategoryModalView();
                 catOverlay.classList.add('active');
             });
         });
@@ -666,6 +739,7 @@
         catClose.addEventListener("click", () => catOverlay.classList.remove("active"));
         catOverlay.addEventListener("click", (e) => { if(e.target === catOverlay) catOverlay.classList.remove("active"); });
 
+        // Умный поиск
         const searchInput = document.getElementById("search-input");
         const searchResults = document.getElementById("search-results");
 
@@ -703,12 +777,10 @@
                     div.className = "search-item";
                     div.innerText = item.text;
                     div.addEventListener("click", () => {
-                        catTitle.innerText = item.category;
+                        catTitle.innerText = item.category.toUpperCase();
+                        const catList = document.getElementById('category-ideas-list');
                         catList.innerHTML = "";
-                        const itemDiv = document.createElement("div");
-                        itemDiv.className = "idea-item";
-                        itemDiv.innerText = item.text.toUpperCase();
-                        catList.appendChild(itemDiv);
+                        catList.appendChild(createIdeaElement(item));
                         catOverlay.classList.add("active");
                         searchResults.classList.remove("active");
                         searchInput.value = "";
@@ -716,7 +788,6 @@
                     searchResults.appendChild(div);
                 });
             }
-            
             searchResults.classList.add("active");
         });
 
@@ -726,6 +797,7 @@
             }
         });
 
+        // Случайная идея
         const randomBtn = document.getElementById("random-btn");
         const toast = document.getElementById("toast");
 
@@ -751,11 +823,9 @@
                 const randIdea = exclusiveRandomIdeas[Math.floor(Math.random() * exclusiveRandomIdeas.length)];
                 
                 catTitle.innerText = "СЛУЧАЙНАЯ ИДЕЯ";
+                const catList = document.getElementById('category-ideas-list');
                 catList.innerHTML = "";
-                const div = document.createElement("div");
-                div.className = "idea-item";
-                div.innerText = randIdea.text.toUpperCase() + " (" + randIdea.category + ")";
-                catList.appendChild(div);
+                catList.appendChild(createIdeaElement(randIdea));
                 catOverlay.classList.add("active");
                 
                 localStorage.setItem("lastRandom", now);
