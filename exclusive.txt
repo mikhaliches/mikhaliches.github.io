@@ -1,2 +1,12 @@
-Изучить 10 новых тегов в HTML | Саморазвитие | Learn 10 new HTML tags | Self-dev
-Посмотреть сериал Неуязвимый | Отдых | Watch Invincible | Relax
+Изучить 10 новых тегов в HTML и CSS | Саморазвитие | Learn 10 new HTML and CSS tags | Self-dev
+Нарисовать крутое граффити на бумаге | Творчество | Draw cool graffiti on paper | Creative
+Сделать бумажный самолетик сложной формы | Хобби | Make a complex paper airplane | Hobby
+Придумать сюжет для своей mini-игры | Творчество | Invent a plot for your own mini-game | Creative
+Попробовать написать код без единой ошибки | Испытание | Try to write code without a single error | Challenge
+Провести целый час вообще без гаджетов | Испытание | Spend a whole hour without any gadgets | Challenge
+Написать письмо себе в будущее | Саморазвитие | Write a letter to your future self | Self-dev
+Изучить ТТХ зенитного комплекса Панцирь-С1 | Саморазвитие | Study the specs of the Pantsir-S1 system | Self-dev
+Найти в интернете дизайн в стиле Фрутигер Аэро | Хобби | Find Frutiger Aero designs on the web | Hobby
+Разобраться, как прошивать рацию через CHIRP | Хобби | Learn how to program a radio via CHIRP | Hobby
+Смонтировать короткое видео для дедушки | Творчество | Edit a short video for grandfather | Creative
+Придумать смешную шутку для младшей сестры | Творчество | Think of a funny joke for little sister | Creative
