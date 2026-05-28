@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
         (function(m,e,t,r,i,k,a){
             m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -13,8 +12,6 @@
         ym(109454353, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/109454353" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FINDIdea</title>
@@ -25,35 +22,39 @@
         :root {
             --bg-color: #ffffff;
             --text-color: #000000;
-            --block-bg: #f0f0f0;
+            --block-bg: rgba(240, 240, 240, 0.8);
             --card-bg: #ffffff;
             --card-text: #333333;
             --input-border: #000000;
-            --cat-bg: #dddddd;
+            --cat-bg: rgba(221, 221, 221, 0.8);
             --modal-bg: #ffffff;
             --modal-text: #000000;
-            --overlay-bg: rgba(0, 0, 0, 0.5);
+            --overlay-bg: rgba(0, 0, 0, 0.4);
             --slider-bg: #ccc;
             --slider-knob: #ffffff;
             --toast-bg: #000000;
             --toast-text: #ffffff;
+            --grad-1: #f3f4f6;
+            --grad-2: #e5e7eb;
         }
 
         [data-theme="dark"] {
             --bg-color: #121212;
             --text-color: #ffffff;
-            --block-bg: #1e1e1e;
+            --block-bg: rgba(30, 30, 30, 0.8);
             --card-bg: #2d2d2d;
             --card-text: #e0e0e0;
             --input-border: #ffffff;
-            --cat-bg: #333333;
+            --cat-bg: rgba(51, 51, 51, 0.8);
             --modal-bg: #1e1e1e;
             --modal-text: #ffffff;
-            --overlay-bg: rgba(0, 0, 0, 0.7);
+            --overlay-bg: rgba(0, 0, 0, 0.6);
             --slider-bg: #444;
             --slider-knob: #ffffff;
             --toast-bg: #ffffff;
             --toast-text: #000000;
+            --grad-1: #111827;
+            --grad-2: #1f2937;
         }
 
         body { 
@@ -61,13 +62,42 @@
             margin: 0; 
             padding: 20px; 
             font-weight: 700;
-            background-color: var(--bg-color);
             color: var(--text-color);
-            transition: background-color 0.8s ease, color 0.5s ease;
+            background: linear-gradient(135deg, var(--bg-color), var(--grad-1), var(--grad-2));
+            background-size: 400% 400%;
+            animation: gradientBg 15s ease infinite;
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        body.theme-changing {
-            background-position: bottom center;
+        @keyframes gradientBg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Канвас для фоновых частиц */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Анимация плавного появления элементов */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .header { 
@@ -77,11 +107,23 @@
             transition: color 0.5s ease; 
             flex-wrap: wrap;
             gap: 15px;
+            backdrop-filter: blur(5px);
         }
         .logo-block { display: flex; align-items: center; }
         .logo { width: 80px; }
         .nav-menu { display: flex; list-style: none; gap: 20px; align-items: center; margin: 0; padding: 0; }
-        .link { text-decoration: none; color: var(--text-color); cursor: pointer; transition: color 0.5s ease; display: flex; align-items: center; gap: 5px; }
+        
+        /* Эффект нажатия для ссылок */
+        .link { 
+            text-decoration: none; 
+            color: var(--text-color); 
+            cursor: pointer; 
+            transition: color 0.3s ease, transform 0.1s ease; 
+            display: flex; 
+            align-items: center; 
+            gap: 5px; 
+        }
+        .link:active { transform: scale(0.95); }
 
         .container { 
             display: grid; 
@@ -107,6 +149,7 @@
             transition: border 0.5s ease, box-shadow 0.5s ease, background-color 0.8s ease;
             border: 3px solid transparent; 
             box-sizing: border-box;
+            backdrop-filter: blur(10px);
         }
 
         #ideas-list { overflow-y: auto; flex-grow: 1; margin-top: 10px; }
@@ -125,6 +168,8 @@
             justify-content: space-between;
             align-items: center;
             gap: 10px;
+            opacity: 0;
+            animation: fadeInUp 0.4s ease forwards;
         }
 
         .heart-svg {
@@ -138,6 +183,7 @@
             flex-shrink: 0;
         }
         .heart-svg:hover { transform: scale(1.2); }
+        .heart-svg:active { transform: scale(0.9); }
         .heart-svg.liked { fill: #ff3b30; stroke: #ff3b30; }
         
         .updates-section {
@@ -149,8 +195,10 @@
             box-sizing: border-box; 
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.8s ease;
+            backdrop-filter: blur(10px);
         }
         .updates-section:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .updates-section:active { transform: scale(0.98); }
         .update-date { font-size: 0.85rem; color: var(--text-color); opacity: 0.7; margin-top: 8px; font-weight: 400; transition: color 0.5s ease; }
 
         .title-block { 
@@ -183,6 +231,7 @@
             font-size: 1.2rem; 
             transition: background-color 0.8s ease, color 0.5s ease, border-color 0.5s ease;
             box-sizing: border-box;
+            border-radius: 4px;
         }
 
         .search-results {
@@ -224,6 +273,7 @@
             gap: 8px;
         }
         .random-btn:hover:not(.locked) { transform: scale(1.05); }
+        .random-btn:active:not(.locked) { transform: scale(0.98); }
         .random-btn.locked { opacity: 0.5; cursor: not-allowed; }
 
         .categories {
@@ -242,11 +292,13 @@
             transition: background-color 0.8s ease, transform 0.2s ease, box-shadow 0.2s ease;
             cursor: pointer;
             border-radius: 8px;
+            backdrop-filter: blur(10px);
         }
         .cat-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
+        .cat-item:active { transform: scale(0.95); }
         .cat-item h2 { font-size: 1.2rem; margin: 0 0 10px 0; }
         .cat-item img { width: 60px; pointer-events: none; height: auto; }
 
@@ -259,6 +311,7 @@
             z-index: 1000;
             padding: 20px;
             box-sizing: border-box;
+            backdrop-filter: blur(4px);
         }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
         
@@ -274,6 +327,7 @@
             box-sizing: border-box;
             max-height: 90vh;
             overflow-y: auto;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
         .modal-close { position: absolute; top: 15px; right: 20px; font-size: 2rem; cursor: pointer; color: var(--modal-text); line-height: 1; }
 
@@ -364,6 +418,8 @@
 </head>
 <body>
 
+    <canvas id="particles-canvas"></canvas>
+
     <div id="toast" class="toast" data-i18n="toast-wait">подождите час или менее</div>
 
     <header class="header">
@@ -388,9 +444,9 @@
             </aside>
 
             <aside class="updates-section" id="update-trigger">
-                <h2 data-i18n="aside-upd">Обновление v1.6.1</h2>
-                <div class="update-date" data-i18n="upd-date">Дата выхода: 27.05.2026</div>
-                <div class="update-date" data-i18n="upd-time">Время: 22:25</div>
+                <h2 data-i18n="aside-upd">Обновление v1.6.2</h2>
+                <div class="update-date" data-i18n="upd-date">Дата выхода: 28.05.2026</div>
+                <div class="update-date" data-i18n="upd-time">Время: 10:00</div>
             </aside>
         </div>
 
@@ -416,21 +472,19 @@
         </main>
     </div>
 
-    <!-- Модалка обновлений -->
     <div class="modal-overlay" id="modal-overlay">
         <div class="modal-window">
             <span class="modal-close" id="modal-close">&times;</span>
-            <h2 data-i18n="mod-upd-title">Полный список обновлений v1.6.1</h2>
-            <p data-i18n="mod-upd-p">Дата релиза: 27 мая 2026 года, 22:25</p>
+            <h2 data-i18n="mod-upd-title">Полный список обновлений v1.6.2</h2>
+            <p data-i18n="mod-upd-p">Дата релиза: 28 мая 2026 года, 10:00</p>
             <ul style="line-height: 1.8; padding-left: 20px;">
-                <li data-i18n="mod-upd-li1"><strong>Мультиязычность:</strong> Добавлена полная поддержка английского языка (переключатель в настройках).</li>
-                <li data-i18n="mod-upd-li2"><strong>Перевод базы:</strong> Все 50 идей и категории теперь имеют английскую версию.</li>
-                <li data-i18n="mod-upd-li3"><strong>Фикс кэша:</strong> Идеи в категориях и избранном теперь корректно переводятся, игнорируя старые сохраненные данные.</li>
+                <li data-i18n="mod-upd-li1"><strong>Интерфейсные эффекты:</strong> Добавлены микро-анимации сжатия при физическом клике на все кнопки и интерактивные плитки.</li>
+                <li data-i18n="mod-upd-li2"><strong>Плавное появление:</strong> Новые карточки идей теперь плавно материализуются на экране благодаря каскадной анимации.</li>
+                <li data-i18n="mod-upd-li3"><strong>Живой фон:</strong> Реализован медленно переливающийся полноэкранный градиент и система автономных летающих частиц на холсте HTML5 Canvas.</li>
             </ul>
         </div>
     </div>
 
-    <!-- Модалка настроек -->
     <div class="modal-overlay" id="settings-overlay">
         <div class="modal-window">
             <span class="modal-close" id="settings-close">&times;</span>
@@ -452,7 +506,6 @@
         </div>
     </div>
 
-    <!-- Модалка категорий -->
     <div class="modal-overlay" id="category-overlay">
         <div class="modal-window">
             <span class="modal-close" id="category-close">&times;</span>
@@ -461,7 +514,6 @@
         </div>
     </div>
 
-    <!-- Модалка ИЗБРАННОГО -->
     <div class="modal-overlay" id="fav-overlay">
         <div class="modal-window">
             <span class="modal-close" id="fav-close">&times;</span>
@@ -479,12 +531,12 @@
                 "search-ph": "Поиск...", "btn-random": "⚡ Случайная идея", "btn-random-locked": "🔒 Случайная идея",
                 "cat-home": "ДОМ", "cat-city": "ГОРОД", "cat-street": "УЛИЦА", "cat-games": "ИГРЫ",
                 "cat-soon1": "СКОРО..", "cat-soon2": "СКОРО..",
-                "aside-new": "Новые идеи:", "aside-upd": "Обновление v1.6.1",
-                "upd-date": "Дата выхода: 27.05.2026", "upd-time": "Время: 22:25",
-                "mod-upd-title": "Полный список обновлений v1.6.1", "mod-upd-p": "Дата релиза: 27 мая 2026 года, 22:25",
-                "mod-upd-li1": "<strong>Мультиязычность:</strong> Добавлена полная поддержка английского языка (переключатель в настройках).",
-                "mod-upd-li2": "<strong>Перевод базы:</strong> Все 50 идей и категории теперь имеют английскую версию.",
-                "mod-upd-li3": "<strong>Фикс кэша:</strong> Идеи в категориях и избранном теперь корректно переводятся, игнорируя старые сохраненные данные.",
+                "aside-new": "Новые идеи:", "aside-upd": "Обновление v1.6.2",
+                "upd-date": "Дата выхода: 28.05.2026", "upd-time": "Время: 10:00",
+                "mod-upd-title": "Полный список обновлений v1.6.2", "mod-upd-p": "Дата релиза: 28 мая 2026 года, 10:00",
+                "mod-upd-li1": "<strong>Интерфейсные эффекты:</strong> Добавлены микро-анимации сжатия при физическом клике на все кнопки и интерактивные плитки.",
+                "mod-upd-li2": "<strong>Плавное появление:</strong> Новые карточки идей теперь плавно материализуются на экране благодаря каскадной анимации.",
+                "mod-upd-li3": "<strong>Живой фон:</strong> Реализован медленно переливающийся полноэкранный градиент и система автономных летающих частиц на холсте HTML5 Canvas.",
                 "mod-set-title": "Панель настроек", "set-theme": "Тёмная тема", "set-lang": "Язык / Language",
                 "mod-fav-title": "❤️ Избранные идеи", "toast-wait": "подождите час или менее",
                 "empty-fav": "Здесь пока ничего нет. Нажимайте на ❤ у любых идей!",
@@ -497,12 +549,12 @@
                 "search-ph": "Search...", "btn-random": "⚡ Random Idea", "btn-random-locked": "🔒 Random Idea",
                 "cat-home": "HOME", "cat-city": "CITY", "cat-street": "STREET", "cat-games": "GAMES",
                 "cat-soon1": "SOON..", "cat-soon2": "SOON..",
-                "aside-new": "New ideas:", "aside-upd": "Update v1.6.1",
-                "upd-date": "Release date: 05.27.2026", "upd-time": "Time: 22:25",
-                "mod-upd-title": "Full changelog v1.6.1", "mod-upd-p": "Release date: May 27, 2026, 22:25",
-                "mod-upd-li1": "<strong>Multilingual:</strong> Full English language support added (toggle in settings).",
-                "mod-upd-li2": "<strong>Database Translation:</strong> All 50 ideas and categories now have an English version.",
-                "mod-upd-li3": "<strong>Cache Fix:</strong> Ideas in categories and favorites now translate correctly, ignoring old cached data.",
+                "aside-new": "New ideas:", "aside-upd": "Update v1.6.2",
+                "upd-date": "Release date: 05.28.2026", "upd-time": "Time: 10:00",
+                "mod-upd-title": "Full changelog v1.6.2", "mod-upd-p": "Release date: May 28, 2026, 10:00",
+                "mod-upd-li1": "<strong>Interface Effects:</strong> Added subtle scale-down click animations to all active elements and category cards.",
+                "mod-upd-li2": "<strong>Smooth Reveal:</strong> Content pieces now smoothly float up and materialize using CSS cascade animations.",
+                "mod-upd-li3": "<strong>Living Background:</strong> Deployed a smooth-shifting fullscreen color gradient synced with an autonomous drifting particles system built on HTML5 Canvas.",
                 "mod-set-title": "Settings Panel", "set-theme": "Dark theme", "set-lang": "Language / Язык",
                 "mod-fav-title": "❤️ Favorite ideas", "toast-wait": "please wait an hour or less",
                 "empty-fav": "Nothing here yet. Click ❤ on any ideas!",
@@ -584,7 +636,7 @@
             { text: "Нарисовать собственное граффити на бумаге", text_en: "Draw your own graffiti on paper", category: "Творчество", category_en: "Creative" },
             { text: "Сделать бумажный самолетик сложной формы", text_en: "Make a complex paper airplane", category: "Хобби", category_en: "Hobby" },
             { text: "Послушать новый альбом от начала до конца", text_en: "Listen to a new album start to finish", category: "Отдых", category_en: "Relax" },
-            { text: "Придумать сюжет для своей мини-игры", text_en: "Invent a plot for your own mini-game", category: "Творчество", category_en: "Creative" },
+            { text: "Придумать сюжет для своей mini-игры", text_en: "Invent a plot for your own mini-game", category: "Творчество", category_en: "Creative" },
             { text: "Выучить 5 фраз на редком языке", text_en: "Learn 5 phrases in a rare language", category: "Саморазвитие", category_en: "Self-dev" },
             { text: "Попробовать написать код без единой ошибки", text_en: "Try to write code without a single error", category: "Испытание", category_en: "Challenge" },
             { text: "Устроить фотосессию объектов в комнате", text_en: "Do a photo shoot of objects in your room", category: "Хобби", category_en: "Hobby" },
@@ -662,11 +714,12 @@
             }
         }
 
-        function createIdeaElement(item) {
+        function createIdeaElement(item, index = 0) {
             const div = document.createElement("div");
             div.className = "idea-item";
+            // Каскадная задержка для плавного появления
+            div.style.animationDelay = `${index * 0.08}s`;
             
-            // ФИКС КЭША: Ищем свежую идею в базе данных по русскому тексту, чтобы всегда иметь доступ к английскому переводу
             const actualItem = ideas.find(i => i.text === item.text) || exclusiveRandomIdeas.find(i => i.text === item.text) || item;
             
             const spanText = document.createElement("span");
@@ -696,8 +749,8 @@
         function renderIdeas(items) {
             const list = document.getElementById("ideas-list");
             list.innerHTML = "";
-            items.forEach(item => {
-                list.appendChild(createIdeaElement(item));
+            items.forEach((item, index) => {
+                list.appendChild(createIdeaElement(item, index));
             });
         }
 
@@ -708,8 +761,8 @@
                 favList.innerHTML = `<div class='idea-item'>${translations[currentLang]["empty-fav"]}</div>`;
                 return;
             }
-            favorites.forEach(item => {
-                favList.appendChild(createIdeaElement(item));
+            favorites.forEach((item, index) => {
+                favList.appendChild(createIdeaElement(item, index));
             });
         }
 
@@ -728,8 +781,8 @@
             const ideasToShow = savedCatIdeas[activeCategoryTile] || [];
             
             if (ideasToShow.length > 0) {
-                ideasToShow.forEach(item => {
-                    catList.appendChild(createIdeaElement(item));
+                ideasToShow.forEach((item, index) => {
+                    catList.appendChild(createIdeaElement(item, index));
                 });
             } else {
                 catList.innerHTML = `<div class='idea-item'>${translations[currentLang]["no-ideas"]}</div>`;
@@ -897,7 +950,7 @@
                 title.innerText = cat.toUpperCase();
                 searchResults.appendChild(title);
 
-                grouped[cat].forEach(item => {
+                grouped[cat].forEach((item, index) => {
                     const div = document.createElement("div");
                     div.className = "search-item";
                     div.innerText = currentLang === 'ru' ? item.text : item.text_en;
@@ -905,7 +958,7 @@
                         catTitle.innerText = (currentLang === 'ru' ? item.category : item.category_en).toUpperCase();
                         const catList = document.getElementById('category-ideas-list');
                         catList.innerHTML = "";
-                        catList.appendChild(createIdeaElement(item));
+                        catList.appendChild(createIdeaElement(item, index));
                         catOverlay.classList.add("active");
                         searchResults.classList.remove("active");
                         searchInput.value = "";
@@ -950,13 +1003,83 @@
                 catTitle.innerText = translations[currentLang]["cat-modal-rand"];
                 const catList = document.getElementById('category-ideas-list');
                 catList.innerHTML = "";
-                catList.appendChild(createIdeaElement(randIdea));
+                catList.appendChild(createIdeaElement(randIdea, 0));
                 catOverlay.classList.add("active");
                 
                 localStorage.setItem("lastRandom", now);
                 updateRandomBtnState();
             }
         });
+
+        // ДВИЖОК ФОНОВЫХ ЧАСТИЦ (HTML5 Canvas)
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let particlesArray = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 0.4 - 0.2;
+                this.speedY = Math.random() * 0.4 - 0.2;
+                this.alpha = Math.random() * 0.5 + 0.1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Возврат в границы при вылете за экран
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = savedTheme === 'dark' ? '#ffffff' : '#000000';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            const numberOfParticles = Math.floor((canvas.width * canvas.height) / 12000);
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        // Обновление цвета частиц при смене темы
+        themeToggle.addEventListener("change", () => {
+            setTimeout(() => {
+                const currentTheme = localStorage.getItem('theme') || 'light';
+                for (let i = 0; i < particlesArray.length; i++) {
+                    particlesArray[i].alpha = Math.random() * 0.5 + 0.1;
+                }
+            }, 100);
+        });
+
+        initParticles();
+        animateParticles();
 
         updateUI();
         updateRandomBtnState();
