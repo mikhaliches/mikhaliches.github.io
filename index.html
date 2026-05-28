@@ -525,9 +525,8 @@
             <div id="fav-ideas-list" style="margin-top: 20px; max-height: 60vh; overflow-y: auto;"></div>
         </div>
     </div>
-
     <script>
-        const translations = {
+const translations = {
             ru: {
                 "nav-new": "Новое", "nav-fav": "❤️ Избранное", "nav-settings": "⚙️ Настройки",
                 "title-sub": "Не знаете, чем заняться?", "title-main": "Мы можем найти!",
@@ -567,97 +566,49 @@
         };
 
         let currentLang = localStorage.getItem('appLang') || 'ru';
-
-        const ideas = [
-            { text: "Поиграть в GTA", text_en: "Play GTA", category: "Игры", category_en: "Games" },
-            { text: "Поиграть в Minecraft", text_en: "Play Minecraft", category: "Игры", category_en: "Games" },
-            { text: "Сыграть в шахматы", text_en: "Play Chess", category: "Игры", category_en: "Games" },
-            { text: "Пройти Portal", text_en: "Play Portal", category: "Игры", category_en: "Games" },
-            { text: "Посмотреть сериал", text_en: "Watch a TV series", category: "Игры", category_en: "Games" },
-            { text: "Поиграть в Ведьмака", text_en: "Play The Witcher", category: "Игры", category_en: "Games" },
-            { text: "Поиграть в Counter-Strike", text_en: "Play Counter-Strike", category: "Игры", category_en: "Games" },
-            { text: "Поиграть в Dota 2", text_en: "Play Dota 2", category: "Игры", category_en: "Games" },
-            { text: "Поиграть в Cyberpunk 2077", text_en: "Play Cyberpunk 2077", category: "Игры", category_en: "Games" },
-            { text: "Поиграть в Terraria", text_en: "Play Terraria", category: "Игры", category_en: "Games" },
-            { text: "Поиграть в Brawl Stars", text_en: "Play Brawl Stars", category: "Игры", category_en: "Games" },
-            { text: "Пройти сюжетную инди-игру", text_en: "Play a story-driven indie game", category: "Игры", category_en: "Games" },
-            { text: "Поиграть в мобильную головоломку", text_en: "Play a mobile puzzle game", category: "Игры", category_en: "Games" },
-            { text: "Сыграть в настольную игру онлайн", text_en: "Play a board game online", category: "Игры", category_en: "Games" },
-            { text: "Поиграть в гонки", text_en: "Play a racing game", category: "Игры", category_en: "Games" },
-            
-            { text: "Прибраться на столе", text_en: "Clean up the desk", category: "Дом", category_en: "Home" },
-            { text: "Сделать уроки", text_en: "Do homework", category: "Дом", category_en: "Home" },
-            { text: "Почитать книгу", text_en: "Read a book", category: "Дом", category_en: "Home" },
-            { text: "Приготовить ужин", text_en: "Cook dinner", category: "Дом", category_en: "Home" },
-            { text: "Сделать перестановку", text_en: "Rearrange furniture", category: "Дом", category_en: "Home" },
-            { text: "Помыть посуду", text_en: "Wash the dishes", category: "Дом", category_en: "Home" },
-            { text: "Полить домашние цветы", text_en: "Water the houseplants", category: "Дом", category_en: "Home" },
-            { text: "Разобрать старые вещи в шкафу", text_en: "Sort out old clothes in the closet", category: "Дом", category_en: "Home" },
-            { text: "Посмотреть документальный фильм", text_en: "Watch a documentary", category: "Дом", category_en: "Home" },
-            { text: "Сделать зарядку или растяжку", text_en: "Do some exercises or stretching", category: "Дом", category_en: "Home" },
-            { text: "Постирать одежду", text_en: "Do the laundry", category: "Дом", category_en: "Home" },
-            { text: "Пропылесосить в комнате", text_en: "Vacuum the room", category: "Дом", category_en: "Home" },
-            { text: "Нарисовать рисунок в блокноте", text_en: "Draw a sketch in a notebook", category: "Дом", category_en: "Home" },
-            { text: "Приготовить новое необычное блюдо", text_en: "Cook a new unusual dish", category: "Дом", category_en: "Home" },
-            { text: "Послушать подкаст на интересную тему", text_en: "Listen to an interesting podcast", category: "Дом", category_en: "Home" },
-            
-            { text: "Сходить за хлебом", text_en: "Go buy some bread", category: "Город", category_en: "City" },
-            { text: "Сходить в кино", text_en: "Go to the cinema", category: "Город", category_en: "City" },
-            { text: "Посетить музей", text_en: "Visit a museum", category: "Город", category_en: "City" },
-            { text: "Погулять в парке", text_en: "Take a walk in the park", category: "Город", category_en: "City" },
-            { text: "Сходить в кафе", text_en: "Go to a cafe", category: "Город", category_en: "City" },
-            { text: "Посетить торговый центр", text_en: "Visit a shopping mall", category: "Город", category_en: "City" },
-            { text: "Сходить на выставку современного искусства", text_en: "Go to a modern art exhibition", category: "Город", category_en: "City" },
-            { text: "Покататься на общественном транспорте", text_en: "Take a ride on public transport", category: "Город", category_en: "City" },
-            { text: "Зайти в местный книжный магазин", text_en: "Visit a local bookstore", category: "Город", category_en: "City" },
-            { text: "Найти новые граффити на улицах", text_en: "Find new street graffiti", category: "Город", category_en: "City" },
-            { text: "Сходить в боулинг", text_en: "Go bowling", category: "Город", category_en: "City" },
-            { text: "Сделать фотографии городских зданий", text_en: "Take photos of city buildings", category: "Город", category_en: "City" },
-            { text: "Посетить городскую библиотеку", text_en: "Visit the city library", category: "Город", category_en: "City" },
-            { text: "Зайти в магазин старых пластинок", text_en: "Visit a vintage record store", category: "Город", category_en: "City" },
-            { text: "Найти смотровую площадку города", text_en: "Find a city viewpoint", category: "Город", category_en: "City" },
-            
-            { text: "Покататься на велике", text_en: "Ride a bike", category: "Улица", category_en: "Street" },
-            { text: "Поиграть в футбол", text_en: "Play football", category: "Улица", category_en: "Street" },
-            { text: "Сделать пробежку", text_en: "Go for a run", category: "Улица", category_en: "Street" },
-            { text: "Покормить птиц", text_en: "Feed the birds", category: "Улица", category_en: "Street" },
-            { text: "Пройтись пешком", text_en: "Take a walk", category: "Улица", category_en: "Street" },
-            { text: "Покататься на самокате", text_en: "Ride a scooter", category: "Улица", category_en: "Street" },
-            { text: "Поиграть в баскетбол", text_en: "Play street basketball", category: "Улица", category_en: "Street" },
-            { text: "Прыгать на скакалке", text_en: "Jump rope", category: "Улица", category_en: "Street" },
-            { text: "Встретиться с друзьями во дворе", text_en: "Meet friends outside", category: "Улица", category_en: "Street" },
-            { text: "Устроить пикник на траве", text_en: "Have a picnic on the grass", category: "Улица", category_en: "Street" },
-            { text: "Пройти десять тысяч шагов", text_en: "Walk ten thousand steps", category: "Улица", category_en: "Street" },
-            { text: "Послушать музыку, гуляя вечером", text_en: "Listen to music while walking at night", category: "Улица", category_en: "Street" },
-            { text: "Понаблюдать за облаками", text_en: "Watch the clouds from a bench", category: "Улица", category_en: "Street" },
-            { text: "Изучить новые улочки района", text_en: "Explore new neighborhood streets", category: "Улица", category_en: "Street" },
-            { text: "Собрать красивые листья", text_en: "Collect beautiful autumn leaves", category: "Улица", category_en: "Street" }
-        ];
-
-        const exclusiveRandomIdeas = [
-            { text: "Изучить 10 новых тегов в HTML", text_en: "Learn 10 new HTML tags", category: "Саморазвитие", category_en: "Self-dev" },
-            { text: "Нарисовать собственное граффити на бумаге", text_en: "Draw your own graffiti on paper", category: "Творчество", category_en: "Creative" },
-            { text: "Сделать бумажный самолетик сложной формы", text_en: "Make a complex paper airplane", category: "Хобби", category_en: "Hobby" },
-            { text: "Послушать новый альбом от начала до конца", text_en: "Listen to a new album start to finish", category: "Отдых", category_en: "Relax" },
-            { text: "Придумать сюжет для своей mini-игры", text_en: "Invent a plot for your own mini-game", category: "Творчество", category_en: "Creative" },
-            { text: "Выучить 5 фраз на редком языке", text_en: "Learn 5 phrases in a rare language", category: "Саморазвитие", category_en: "Self-dev" },
-            { text: "Попробовать написать код без единой ошибки", text_en: "Try to write code without a single error", category: "Испытание", category_en: "Challenge" },
-            { text: "Устроить фотосессию объектов в комнате", text_en: "Do a photo shoot of objects in your room", category: "Хобби", category_en: "Hobby" },
-            { text: "Придумать шифр и написать им записку", text_en: "Invent a cipher and write a note with it", category: "Квесты", category_en: "Quests" },
-            { text: "Построить башню из подручных предметов", text_en: "Build a tower from random objects", category: "Развлечение", category_en: "Fun" },
-            { text: "Написать рассказ из ровно ста слов", text_en: "Write a story of exactly 100 words", category: "Творчество", category_en: "Creative" },
-            { text: "Освоить три простых фокуса", text_en: "Learn three simple magic tricks", category: "Развлечение", category_en: "Fun" },
-            { text: "Попробовать медитировать десять минут", text_en: "Try meditating for ten minutes", category: "Саморазвитие", category_en: "Self-dev" },
-            { text: "Узнать историю своей фамилии", text_en: "Find out the history of your surname", category: "Саморазвитие", category_en: "Self-dev" },
-            { text: "Сделать коллаж из старых журналов", text_en: "Make a collage from old magazines", category: "Творчество", category_en: "Creative" },
-            { text: "Провести час без единого гаджета", text_en: "Spend an hour without any gadgets", category: "Испытание", category_en: "Challenge" },
-            { text: "Сделать оригами в виде журавлика", text_en: "Make an origami paper crane", category: "Хобби", category_en: "Hobby" },
-            { text: "Написать письмо себе в будущее", text_en: "Write a letter to your future self", category: "Саморазвитие", category_en: "Self-dev" },
-            { text: "Выучить наизусть стихотворение", text_en: "Learn a short poem by heart", category: "Саморазвитие", category_en: "Self-dev" },
-            { text: "Придумать логотип для бренда", text_en: "Design a logo for a fictional brand", category: "Творчество", category_en: "Creative" }
-        ];
-
+        let ideas = [];
+        let exclusiveRandomIdeas = [];
         let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        let activeCategoryTile = "";
+
+        // ФУНКЦИЯ ЗАГРУЗКИ ДАННЫХ ИЗ БЛОКНОТОВ
+        async function loadDataFromFiles() {
+            try {
+                // Качаем обычную базу данных
+                const resDb = await fetch('database.txt');
+                const textDb = await resDb.text();
+                ideas = parseTxtDatabase(textDb);
+
+                // Качаем эксклюзивную базу данных
+                const resEx = await fetch('exclusive.txt');
+                const textEx = await resEx.text();
+                exclusiveRandomIdeas = parseTxtDatabase(textEx);
+
+                console.log(`Базы загружены. Идей: ${ideas.length}, Эксклюзива: ${exclusiveRandomIdeas.length}`);
+                
+                // Запускаем стандартную логику после загрузки файлов
+                updateUI();
+                checkAndUpdate();
+            } catch (err) {
+                console.error("Ошибка загрузки баз данных файлов:", err);
+            }
+        }
+
+        // Парсер строк блокнота в объекты JavaScript
+        function parseTxtDatabase(text) {
+            return text.split('\n')
+                .map(line => line.trim())
+                .filter(line => line.length > 0 && line.includes('|'))
+                .map(line => {
+                    const parts = line.split('|').map(p => p.trim());
+                    return {
+                        text: parts[0] || "",
+                        category: parts[1] || "",
+                        text_en: parts[2] || parts[0],
+                        category_en: parts[3] || parts[1]
+                    };
+                });
+        }
 
         function updateUI() {
             document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -768,8 +719,6 @@
             });
         }
 
-        let activeCategoryTile = "";
-
         function updateCategoryModalView() {
             const catList = document.getElementById('category-ideas-list');
             catList.innerHTML = "";
@@ -821,6 +770,7 @@
         }
 
         function checkAndUpdate() {
+            if (ideas.length === 0) return; // Ждем, пока загрузится файл
             const now = new Date().getTime();
             const lastUpdate = localStorage.getItem('lastUpdate');
             
@@ -1000,6 +950,7 @@
                 toast.classList.add("show");
                 setTimeout(() => toast.classList.remove("show"), 3000);
             } else {
+                if(exclusiveRandomIdeas.length === 0) return;
                 const randIdea = exclusiveRandomIdeas[Math.floor(Math.random() * exclusiveRandomIdeas.length)];
                 
                 catTitle.innerText = translations[currentLang]["cat-modal-rand"];
@@ -1045,7 +996,6 @@
                 ctx.save();
                 ctx.globalAlpha = this.alpha;
                 
-                // Проверяем текущую тему прямо в цикле отрисовки
                 const currentActiveTheme = localStorage.getItem('theme') || 'light';
                 ctx.fillStyle = currentActiveTheme === 'dark' ? '#ffffff' : '#888888';
                 
@@ -1076,12 +1026,11 @@
         initParticles();
         animateParticles();
 
-        updateUI();
-        updateRandomBtnState();
-        checkAndUpdate();
+        // САМЫЙ ГЛАВНЫЙ СТАРТ: сначала качаем текстовые базы данных
+        loadDataFromFiles();
+
         setInterval(checkAndUpdate, 60000);
         setInterval(updateRandomBtnState, 60000);
+        </script>
         
-    </script>
 </body>
-</html>
