@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
         (function(m,e,t,r,i,k,a){
             m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -13,8 +12,6 @@
         ym(109454353, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/109454353" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FINDIdea</title>
@@ -444,9 +441,9 @@
             </aside>
 
             <aside class="updates-section" id="update-trigger">
-                <h2 data-i18n="aside-upd">Обновление v1.6.2</h2>
+                <h2 data-i18n="aside-upd">Обновление v1.7</h2>
                 <div class="update-date" data-i18n="upd-date">Дата выхода: 28.05.2026</div>
-                <div class="update-date" data-i18n="upd-time">Время: 10:00</div>
+                <div class="update-date" data-i18n="upd-time">Время: 12:00</div>
             </aside>
         </div>
 
@@ -472,21 +469,19 @@
         </main>
     </div>
 
-    <!-- Модалка обновлений -->
     <div class="modal-overlay" id="modal-overlay">
         <div class="modal-window">
             <span class="modal-close" id="modal-close">&times;</span>
-            <h2 data-i18n="mod-upd-title">Полный список обновлений v1.6.2</h2>
-            <p data-i18n="mod-upd-p">Дата релиза: 28 мая 2026 года, 10:00</p>
+            <h2 data-i18n="mod-upd-title">Полный список обновлений v1.7</h2>
+            <p data-i18n="mod-upd-p">Дата релиза: 28 мая 2026 года, 12:00</p>
             <ul style="line-height: 1.8; padding-left: 20px;">
-                <li data-i18n="mod-upd-li1"><strong>Интерфейсные эффекты:</strong> Добавлены микро-анимации сжатия при физическом клике на все кнопки и интерактивные плитки.</li>
-                <li data-i18n="mod-upd-li2"><strong>Плавное появление:</strong> Новые карточки идей теперь плавно материализуются на экране благодаря каскадной анимации.</li>
-                <li data-i18n="mod-upd-li3"><strong>Живой фон:</strong> Реализован медленно переливающийся полноэкранный градиент и система автономных летающих частиц на холсте HTML5 Canvas.</li>
+                <li data-i18n="mod-upd-li1"><strong>Текстовая база данных:</strong> Все массивы идей полностью вырезаны из кода сайта. Теперь движок динамически подгружает списки из внешних файлов `database.txt` и `exclusive.txt`.</li>
+                <li data-i18n="mod-upd-li2"><strong>Синхронизация с Python:</strong> База данных стала универсальной. Один и тот же блокнот теперь используется как сайтом на GitHub, так и твоим скриптом на Пайтоне.</li>
+                <li data-i18n="mod-upd-li3"><strong>Оптимизация архитектуры:</strong> Код стал чище и легче. Для добавления или изменения контента больше не нужно редактировать структуру самого `index.html`.</li>
             </ul>
         </div>
     </div>
 
-    <!-- Модалка настроек -->
     <div class="modal-overlay" id="settings-overlay">
         <div class="modal-window">
             <span class="modal-close" id="settings-close">&times;</span>
@@ -508,7 +503,6 @@
         </div>
     </div>
 
-    <!-- Модалка категорий -->
     <div class="modal-overlay" id="category-overlay">
         <div class="modal-window">
             <span class="modal-close" id="category-close">&times;</span>
@@ -517,7 +511,6 @@
         </div>
     </div>
 
-    <!-- Модалка ИЗБРАННОГО -->
     <div class="modal-overlay" id="fav-overlay">
         <div class="modal-window">
             <span class="modal-close" id="fav-close">&times;</span>
@@ -525,20 +518,21 @@
             <div id="fav-ideas-list" style="margin-top: 20px; max-height: 60vh; overflow-y: auto;"></div>
         </div>
     </div>
+
     <script>
-const translations = {
+        const translations = {
             ru: {
                 "nav-new": "Новое", "nav-fav": "❤️ Избранное", "nav-settings": "⚙️ Настройки",
                 "title-sub": "Не знаете, чем заняться?", "title-main": "Мы можем найти!",
                 "search-ph": "Поиск...", "btn-random": "⚡ Случайная идея", "btn-random-locked": "🔒 Случайная идея",
                 "cat-home": "ДОМ", "cat-city": "ГОРОД", "cat-street": "УЛИЦА", "cat-games": "ИГРЫ",
                 "cat-soon1": "СКОРО..", "cat-soon2": "СКОРО..",
-                "aside-new": "Новые идеи:", "aside-upd": "Обновление v1.6.2",
-                "upd-date": "Дата выхода: 28.05.2026", "upd-time": "Время: 10:00",
-                "mod-upd-title": "Полный список обновлений v1.6.2", "mod-upd-p": "Дата релиза: 28 мая 2026 года, 10:00",
-                "mod-upd-li1": "<strong>Интерфейсные эффекты:</strong> Добавлены микро-анимации сжатия при физическом клике на все кнопки и интерактивные плитки.",
-                "mod-upd-li2": "<strong>Плавное появление:</strong> Новые карточки идей теперь плавно материализуются на экране благодаря каскадной анимации.",
-                "mod-upd-li3": "<strong>Живой фон:</strong> Реализован медленно переливающийся полноэкранный градиент и система автономных летающих частиц на холсте HTML5 Canvas.",
+                "aside-new": "Новые идеи:", "aside-upd": "Обновление v1.7",
+                "upd-date": "Дата выхода: 28.05.2026", "upd-time": "Время: 12:00",
+                "mod-upd-title": "Полный список обновлений v1.7", "mod-upd-p": "Дата релиза: 28 мая 2026 года, 12:00",
+                "mod-upd-li1": "<strong>Текстовая база данных:</strong> Все массивы идей полностью вырезаны из кода сайта. Теперь движок динамически подгружает списки из внешних файлов `database.txt` и `exclusive.txt`.",
+                "mod-upd-li2": "<strong>Синхронизация с Python:</strong> База данных стала универсальной. Один и тот же блокнот теперь используется как сайтом на GitHub, так и твоим скриптом на Пайтоне.",
+                "mod-upd-li3": "<strong>Оптимизация архитектуры:</strong> Код стал чище и легче. Для добавления или изменения контента больше не нужно редактировать структуру самого `index.html`.",
                 "mod-set-title": "Панель настроек", "set-theme": "Тёмная тема", "set-lang": "Язык / Language",
                 "mod-fav-title": "❤️ Избранные идеи", "toast-wait": "подождите час или менее",
                 "empty-fav": "Здесь пока ничего нет. Нажимайте на ❤ у любых идей!",
@@ -551,12 +545,12 @@ const translations = {
                 "search-ph": "Search...", "btn-random": "⚡ Random Idea", "btn-random-locked": "🔒 Random Idea",
                 "cat-home": "HOME", "cat-city": "CITY", "cat-street": "STREET", "cat-games": "GAMES",
                 "cat-soon1": "SOON..", "cat-soon2": "SOON..",
-                "aside-new": "New ideas:", "aside-upd": "Update v1.6.2",
-                "upd-date": "Release date: 05.28.2026", "upd-time": "Time: 10:00",
-                "mod-upd-title": "Full changelog v1.6.2", "mod-upd-p": "Release date: May 28, 2026, 10:00",
-                "mod-upd-li1": "<strong>Interface Effects:</strong> Added subtle scale-down click animations to all active elements and category cards.",
-                "mod-upd-li2": "<strong>Smooth Reveal:</strong> Content pieces now smoothly float up and materialize using CSS cascade animations.",
-                "mod-upd-li3": "<strong>Living Background:</strong> Deployed a smooth-shifting fullscreen color gradient synced with an autonomous drifting particles system built on HTML5 Canvas.",
+                "aside-new": "New ideas:", "aside-upd": "Update v1.7",
+                "upd-date": "Release date: 05.28.2026", "upd-time": "Time: 12:00",
+                "mod-upd-title": "Full changelog v1.7", "mod-upd-p": "Release date: May 28, 2026, 12:00",
+                "mod-upd-li1": "<strong>Text Database:</strong> All core arrays have been pulled out from the script. The system now loads ideas live from external `database.txt` and `exclusive.txt` files.",
+                "mod-upd-li2": "<strong>Python Syncing:</strong> The text database is now universal. The same file feeds both your live GitHub project and your backend Python launcher.",
+                "mod-upd-li3": "<strong>Architecture Optimization:</strong> Code layout is cleaner and lighter. Content editing no longer requires altering the core structure of `index.html`.",
                 "mod-set-title": "Settings Panel", "set-theme": "Dark theme", "set-lang": "Language / Язык",
                 "mod-fav-title": "❤️ Favorite ideas", "toast-wait": "please wait an hour or less",
                 "empty-fav": "Nothing here yet. Click ❤ on any ideas!",
@@ -571,22 +565,18 @@ const translations = {
         let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
         let activeCategoryTile = "";
 
-        // ФУНКЦИЯ ЗАГРУЗКИ ДАННЫХ ИЗ БЛОКНОТОВ
         async function loadDataFromFiles() {
             try {
-                // Качаем обычную базу данных
                 const resDb = await fetch('database.txt');
                 const textDb = await resDb.text();
                 ideas = parseTxtDatabase(textDb);
 
-                // Качаем эксклюзивную базу данных
                 const resEx = await fetch('exclusive.txt');
                 const textEx = await resEx.text();
                 exclusiveRandomIdeas = parseTxtDatabase(textEx);
 
                 console.log(`Базы загружены. Идей: ${ideas.length}, Эксклюзива: ${exclusiveRandomIdeas.length}`);
                 
-                // Запускаем стандартную логику после загрузки файлов
                 updateUI();
                 checkAndUpdate();
             } catch (err) {
@@ -594,7 +584,6 @@ const translations = {
             }
         }
 
-        // Парсер строк блокнота в объекты JavaScript
         function parseTxtDatabase(text) {
             return text.split('\n')
                 .map(line => line.trim())
@@ -770,7 +759,7 @@ const translations = {
         }
 
         function checkAndUpdate() {
-            if (ideas.length === 0) return; // Ждем, пока загрузится файл
+            if (ideas.length === 0) return; 
             const now = new Date().getTime();
             const lastUpdate = localStorage.getItem('lastUpdate');
             
@@ -1026,11 +1015,10 @@ const translations = {
         initParticles();
         animateParticles();
 
-        // САМЫЙ ГЛАВНЫЙ СТАРТ: сначала качаем текстовые базы данных
         loadDataFromFiles();
 
         setInterval(checkAndUpdate, 60000);
         setInterval(updateRandomBtnState, 60000);
-        </script>
-        
+    </script>
 </body>
+</html>
