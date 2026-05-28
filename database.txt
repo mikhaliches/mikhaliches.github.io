@@ -1,5 +1,23 @@
-Поиграть в GTA | Игры | Play GTA | Games
-Поиграть в Minecraft | Игры | Play Minecraft | Games
-Прибраться на столе | Дом | Clean up the desk | Home
-Погулять в парке | Город | Take a walk in the park | City
-Покататься на велике | Улица | Ride a bike | Street
+Поиграть в GTA Online | Игры | Play GTA Online | Games
+Поиграть в Minecraft с модами | Игры | Play Minecraft with mods | Games
+Сыграть раунд в Counter-Strike 2 | Игры | Play a round in Counter-Strike 2 | Games
+Полетать в Microsoft Flight Simulator | Игры | Fly in Microsoft Flight Simulator | Games
+Прибраться на столе и вокруг ПК | Дом | Clean up the desk and around the PC | Home
+Помыть посуду и помочь маме | Дом | Wash the dishes and help mom | Home
+Разобрать старые вещи в шкафу | Дом | Sort out old clothes in the closet | Home
+Почитать комикс Неуязвимый | Дом | Read the Invincible comic book | Home
+Посмотреть весёлые мемы в интернете | Дом | Watch funny memes on the internet | Home
+Сходить за хлебом в магазин | Город | Go buy some bread at the store | City
+Сходить в кино на новый фильм | Город | Go to the cinema to see a new movie | City
+Посетить Музей И. А. Кошмана | Город | Visit the I. A. Koshman Museum | City
+Погулять в парке или у ТЦ | Город | Take a walk in the park or near the mall | City
+Покататься на велике по району | Улица | Ride a bike around the neighborhood | Street
+Поиграть в футбол во дворе | Улица | Play football in the yard | Street
+Сделать пробежку на свежем воздухе | Улица | Go for a run in the fresh air | Street
+Покормить птиц в сквере | Улица | Feed the birds in the square | Street
+Покататься на трюковом самокате | Улица | Ride a stunt scooter | Street
+Встретиться с друзьями на площадке | Улица | Meet up with friends at the playground | Street
+Пройти 10000 шагов по красивым местам | Улица | Walk 10000 steps in beautiful places | Street
+Понаблюдать за облаками на лавочке | Улица | Watch the clouds from a bench | Street
+Изучить новые улочки и тропинки | Улица | Explore new streets and paths | Street
+Послушать музыку, гуляя вечером | Улица | Listen to music while walking at night | Street
