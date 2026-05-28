@@ -472,8 +472,8 @@
     <div class="modal-overlay" id="modal-overlay">
         <div class="modal-window">
             <span class="modal-close" id="modal-close">&times;</span>
-            <h2 data-i18n="mod-upd-title">Полный список обновлений v1.7</h2>
-            <p data-i18n="mod-upd-p">Дата релиза: 28 мая 2026 года, 12:00</p>
+            <h2 data-i18n="mod-upd-title">Полный список обновлений v1.7.5</h2>
+            <p data-i18n="mod-upd-p">Дата релиза: 28 мая 2026 года, 13:00</p>
             <ul style="line-height: 1.8; padding-left: 20px;">
                 <li data-i18n="mod-upd-li1"><strong>Текстовая база данных:</strong> Все массивы идей полностью вырезаны из кода сайта. Теперь движок динамически подгружает списки из внешних файлов `database.txt` и `exclusive.txt`.</li>
                 <li data-i18n="mod-upd-li2"><strong>Синхронизация с Python:</strong> База данных стала универсальной. Один и тот же блокнот теперь используется как сайтом на GitHub, так и твоим скриптом на Пайтоне.</li>
@@ -527,9 +527,9 @@
                 "search-ph": "Поиск...", "btn-random": "⚡ Случайная идея", "btn-random-locked": "🔒 Случайная идея",
                 "cat-home": "ДОМ", "cat-city": "ГОРОД", "cat-street": "УЛИЦА", "cat-games": "ИГРЫ",
                 "cat-soon1": "СКОРО..", "cat-soon2": "СКОРО..",
-                "aside-new": "Новые идеи:", "aside-upd": "Обновление v1.7",
-                "upd-date": "Дата выхода: 28.05.2026", "upd-time": "Время: 12:00",
-                "mod-upd-title": "Полный список обновлений v1.7", "mod-upd-p": "Дата релиза: 28 мая 2026 года, 12:00",
+                "aside-new": "Новые идеи:", "aside-upd": "Обновление v1.7.5",
+                "upd-date": "Дата выхода: 28.05.2026", "upd-time": "Время: 13:00",
+                "mod-upd-title": "Полный список обновлений v1.7.5", "mod-upd-p": "Дата релиза: 28 мая 2026 года, 13:00",
                 "mod-upd-li1": "<strong>Текстовая база данных:</strong> Все массивы идей полностью вырезаны из кода сайта. Теперь движок динамически подгружает списки из внешних файлов `database.txt` и `exclusive.txt`.",
                 "mod-upd-li2": "<strong>Синхронизация с Python:</strong> База данных стала универсальной. Один и тот же блокнот теперь используется как сайтом на GitHub, так и твоим скриптом на Пайтоне.",
                 "mod-upd-li3": "<strong>Оптимизация архитектуры:</strong> Код стал чище и легче. Для добавления или изменения контента больше не нужно редактировать структуру самого `index.html`.",
@@ -545,9 +545,9 @@
                 "search-ph": "Search...", "btn-random": "⚡ Random Idea", "btn-random-locked": "🔒 Random Idea",
                 "cat-home": "HOME", "cat-city": "CITY", "cat-street": "STREET", "cat-games": "GAMES",
                 "cat-soon1": "SOON..", "cat-soon2": "SOON..",
-                "aside-new": "New ideas:", "aside-upd": "Update v1.7",
-                "upd-date": "Release date: 05.28.2026", "upd-time": "Time: 12:00",
-                "mod-upd-title": "Full changelog v1.7", "mod-upd-p": "Release date: May 28, 2026, 12:00",
+                "aside-new": "New ideas:", "aside-upd": "Update v1.7.5",
+                "upd-date": "Release date: 05.28.2026", "upd-time": "Time: 13:00",
+                "mod-upd-title": "Full changelog v1.7.5", "mod-upd-p": "Release date: May 28, 2026, 13:00",
                 "mod-upd-li1": "<strong>Text Database:</strong> All core arrays have been pulled out from the script. The system now loads ideas live from external `database.txt` and `exclusive.txt` files.",
                 "mod-upd-li2": "<strong>Python Syncing:</strong> The text database is now universal. The same file feeds both your live GitHub project and your backend Python launcher.",
                 "mod-upd-li3": "<strong>Architecture Optimization:</strong> Code layout is cleaner and lighter. Content editing no longer requires altering the core structure of `index.html`.",
@@ -920,6 +920,7 @@
         const randomBtnText = document.getElementById("random-btn-text");
         const toast = document.getElementById("toast");
 
+        // ПАТЧ ТАЙМЕРА: Сбрасываем блокировку на 1 час при деплое новой версии контента
         function updateRandomBtnState() {
             const last = localStorage.getItem("lastRandom");
             const now = new Date().getTime();
