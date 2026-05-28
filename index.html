@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
         (function(m,e,t,r,i,k,a){
             m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -12,6 +13,8 @@
         ym(109454353, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/109454353" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FINDIdea</title>
@@ -77,7 +80,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Канвас для фоновых частиц */
         #particles-canvas {
             position: fixed;
             top: 0;
@@ -88,7 +90,6 @@
             pointer-events: none;
         }
 
-        /* Анимация плавного появления элементов */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -113,7 +114,6 @@
         .logo { width: 80px; }
         .nav-menu { display: flex; list-style: none; gap: 20px; align-items: center; margin: 0; padding: 0; }
         
-        /* Эффект нажатия для ссылок */
         .link { 
             text-decoration: none; 
             color: var(--text-color); 
@@ -472,6 +472,7 @@
         </main>
     </div>
 
+    <!-- Модалка обновлений -->
     <div class="modal-overlay" id="modal-overlay">
         <div class="modal-window">
             <span class="modal-close" id="modal-close">&times;</span>
@@ -485,6 +486,7 @@
         </div>
     </div>
 
+    <!-- Модалка настроек -->
     <div class="modal-overlay" id="settings-overlay">
         <div class="modal-window">
             <span class="modal-close" id="settings-close">&times;</span>
@@ -506,6 +508,7 @@
         </div>
     </div>
 
+    <!-- Модалка категорий -->
     <div class="modal-overlay" id="category-overlay">
         <div class="modal-window">
             <span class="modal-close" id="category-close">&times;</span>
@@ -514,6 +517,7 @@
         </div>
     </div>
 
+    <!-- Модалка ИЗБРАННОГО -->
     <div class="modal-overlay" id="fav-overlay">
         <div class="modal-window">
             <span class="modal-close" id="fav-close">&times;</span>
@@ -523,7 +527,6 @@
     </div>
 
     <script>
-        // СЛОВАРЬ ПЕРЕВОДОВ ИНТЕРФЕЙСА
         const translations = {
             ru: {
                 "nav-new": "Новое", "nav-fav": "❤️ Избранное", "nav-settings": "⚙️ Настройки",
@@ -717,7 +720,6 @@
         function createIdeaElement(item, index = 0) {
             const div = document.createElement("div");
             div.className = "idea-item";
-            // Каскадная задержка для плавного появления
             div.style.animationDelay = `${index * 0.08}s`;
             
             const actualItem = ideas.find(i => i.text === item.text) || exclusiveRandomIdeas.find(i => i.text === item.text) || item;
@@ -1036,14 +1038,17 @@
                 this.x += this.speedX;
                 this.y += this.speedY;
 
-                // Возврат в границы при вылете за экран
                 if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
                 if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
             }
             draw() {
                 ctx.save();
                 ctx.globalAlpha = this.alpha;
-                ctx.fillStyle = savedTheme === 'dark' ? '#ffffff' : '#000000';
+                
+                // Проверяем текущую тему прямо в цикле отрисовки
+                const currentActiveTheme = localStorage.getItem('theme') || 'light';
+                ctx.fillStyle = currentActiveTheme === 'dark' ? '#ffffff' : '#888888';
+                
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
@@ -1067,16 +1072,6 @@
             }
             requestAnimationFrame(animateParticles);
         }
-
-        // Обновление цвета частиц при смене темы
-        themeToggle.addEventListener("change", () => {
-            setTimeout(() => {
-                const currentTheme = localStorage.getItem('theme') || 'light';
-                for (let i = 0; i < particlesArray.length; i++) {
-                    particlesArray[i].alpha = Math.random() * 0.5 + 0.1;
-                }
-            }, 100);
-        });
 
         initParticles();
         animateParticles();
